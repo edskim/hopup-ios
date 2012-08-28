@@ -8,9 +8,10 @@
 
 #import <Foundation/Foundation.h>
 @class SignInViewController;
+@class User;
 
 @protocol SignInViewControllerDelegate <NSObject>
 
-- (void)signInViewController:(SignInViewController*)controller signInSuccessfull:(BOOL)succeeded;
+- (void)signInViewController:(SignInViewController*)controller signInSuccessfull:(BOOL)succeeded withUser:(User*)user;
 
 @end

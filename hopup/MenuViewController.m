@@ -10,12 +10,13 @@
 #import "SignInViewController.h"
 #import "SignInViewControllerDelegate.h"
 
-@interface MenuViewController () <SignInViewControllerDelegate>
+@interface MenuViewController () <SignInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property BOOL signedIn;
 @end
 
 @implementation MenuViewController
 @synthesize signedIn;
+@synthesize user;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,6 +30,8 @@
 - (void)loadView {
     CGRect tableViewRect = [[UIScreen mainScreen] bounds];
     self.view = [[UITableView alloc] initWithFrame:tableViewRect];
+    ((UITableView*)self.view).delegate = self;
+    ((UITableView*)self.view).dataSource = self;
     [self.view setBackgroundColor:[UIColor darkGrayColor]];
 }
 
@@ -57,13 +60,28 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)signInViewController:(SignInViewController *)controller signInSuccessfull:(BOOL)succeeded {
+- (void)signInViewController:(SignInViewController *)controller signInSuccessfull:(BOOL)succeeded withUser:(User *)newUser {
     if (succeeded) {
         [self dismissModalViewControllerAnimated:YES];
         self.signedIn = YES;
+        self.user = newUser;
     } else {
-        
+
     }
+}
+
+//UITableView Delegate methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+//UITableView DataSource methods
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
 }
 
 @end
