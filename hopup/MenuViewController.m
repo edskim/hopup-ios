@@ -1,0 +1,69 @@
+//
+//  MenuViewController.m
+//  hopup
+//
+//  Created by Edward Kim on 8/27/12.
+//  Copyright (c) 2012 Edward Kim. All rights reserved.
+//
+
+#import "MenuViewController.h"
+#import "SignInViewController.h"
+#import "SignInViewControllerDelegate.h"
+
+@interface MenuViewController () <SignInViewControllerDelegate>
+@property BOOL signedIn;
+@end
+
+@implementation MenuViewController
+@synthesize signedIn;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void)loadView {
+    CGRect tableViewRect = [[UIScreen mainScreen] bounds];
+    self.view = [[UITableView alloc] initWithFrame:tableViewRect];
+    [self.view setBackgroundColor:[UIColor darkGrayColor]];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    if (!signedIn) {
+        SignInViewController *signinController = [SignInViewController new];
+        signinController.modalPresentationStyle = UIModalPresentationFormSheet;
+        signinController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+        signinController.delegate = self;
+        [self presentViewController:signinController animated:YES completion:NULL];
+    }
+         
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)signInViewController:(SignInViewController *)controller signInSuccessfull:(BOOL)succeeded {
+    if (succeeded) {
+        [self dismissModalViewControllerAnimated:YES];
+        self.signedIn = YES;
+    } else {
+        
+    }
+}
+
+@end
