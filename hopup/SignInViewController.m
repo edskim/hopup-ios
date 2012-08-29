@@ -7,6 +7,7 @@
 //
 
 #import "SignInViewController.h"
+#import "MBProgressHUD.h"
 #import "MenuViewController.h"
 #import "SignInViewControllerDelegate.h"
 #import "RestKit.h"
@@ -63,11 +64,19 @@ extern NSString* applicationURL;
     
     RKClient *client = [RKClient sharedClient];
     if ([self.usernameBox.text length]>0 && [self.passwordBox.text length]>0) {
-        NSDictionary *userNamePassword = [NSDictionary dictionaryWithKeysAndObjects:
-                                          @"email",self.usernameBox.text,
-                                          @"password",self.passwordBox.text, nil];
-        NSDictionary *params = [NSDictionary dictionaryWithObject:userNamePassword forKey:@"session"];
-        [client post:@"sessions.json" params:params delegate:self];
+        
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            NSDictionary *userNamePassword = [NSDictionary dictionaryWithKeysAndObjects:
+                                              @"email",self.usernameBox.text,
+                                              @"password",self.passwordBox.text, nil];
+            NSDictionary *params = [NSDictionary dictionaryWithObject:userNamePassword forKey:@"session"];
+            [client post:@"sessions.json" params:params delegate:self];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+            });
+        });
+        
     } else {
         if ([self.usernameBox.text length] ==0)
             self.errorBox.text = @"Please enter username";
@@ -91,9 +100,6 @@ extern NSString* applicationURL;
         User *newUser = [User new];
         newUser.username = self.usernameBox.text;
         newUser.cookies = [response cookies];
-        for (NSHTTPCookie *cookie in [response cookies]) {
-            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-        }
         [delegate signInViewController:self signInSuccessfull:YES withUser:newUser];
     } else {
         self.errorBox.text = @"Invalid username or password";

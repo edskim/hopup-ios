@@ -19,6 +19,16 @@
 		644794C415EC3022001CEBB0 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 644794C215EC3022001CEBB0 /* SignInViewController.xib */; };
 		644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794CE15EC358D001CEBB0 /* MenuViewController.m */; };
 		644794F615EC5AF5001CEBB0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794F515EC5AF5001CEBB0 /* User.m */; };
+		648229F815ED543E00844696 /* SubscriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229F615ED543E00844696 /* SubscriptionsViewController.m */; };
+		648229F915ED543E00844696 /* SubscriptionsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 648229F715ED543E00844696 /* SubscriptionsViewController.xib */; };
+		648229FC15ED560400844696 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229FB15ED560400844696 /* MenuTableViewCell.m */; };
+		64822A0715ED70B500844696 /* AllTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0515ED70B500844696 /* AllTopicsViewController.m */; };
+		64822A0815ED70B500844696 /* AllTopicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64822A0615ED70B500844696 /* AllTopicsViewController.xib */; };
+		64822A0B15ED71E800844696 /* TopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0A15ED71E800844696 /* TopicTableViewCell.m */; };
+		64822A0E15ED73CC00844696 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0D15ED73CC00844696 /* MBProgressHUD.m */; };
+		64822A1215ED758000844696 /* MyTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1015ED758000844696 /* MyTopicsViewController.m */; };
+		64822A1315ED758000844696 /* MyTopicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64822A1115ED758000844696 /* MyTopicsViewController.xib */; };
+		64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1515ED7CFB00844696 /* TopicsStore.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +52,23 @@
 		644794D715EC3E62001CEBB0 /* SignInViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInViewControllerDelegate.h; sourceTree = "<group>"; };
 		644794F415EC5AF5001CEBB0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		644794F515EC5AF5001CEBB0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		648229F515ED543E00844696 /* SubscriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionsViewController.h; sourceTree = "<group>"; };
+		648229F615ED543E00844696 /* SubscriptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionsViewController.m; sourceTree = "<group>"; };
+		648229F715ED543E00844696 /* SubscriptionsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionsViewController.xib; sourceTree = "<group>"; };
+		648229FA15ED560400844696 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
+		648229FB15ED560400844696 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
+		64822A0415ED70B400844696 /* AllTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllTopicsViewController.h; sourceTree = "<group>"; };
+		64822A0515ED70B500844696 /* AllTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllTopicsViewController.m; sourceTree = "<group>"; };
+		64822A0615ED70B500844696 /* AllTopicsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllTopicsViewController.xib; sourceTree = "<group>"; };
+		64822A0915ED71E800844696 /* TopicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicTableViewCell.h; sourceTree = "<group>"; };
+		64822A0A15ED71E800844696 /* TopicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicTableViewCell.m; sourceTree = "<group>"; };
+		64822A0C15ED73CC00844696 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = SOURCE_ROOT; };
+		64822A0D15ED73CC00844696 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = SOURCE_ROOT; };
+		64822A0F15ED758000844696 /* MyTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTopicsViewController.h; sourceTree = "<group>"; };
+		64822A1015ED758000844696 /* MyTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTopicsViewController.m; sourceTree = "<group>"; };
+		64822A1115ED758000844696 /* MyTopicsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTopicsViewController.xib; sourceTree = "<group>"; };
+		64822A1415ED7CFB00844696 /* TopicsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicsStore.h; sourceTree = "<group>"; };
+		64822A1515ED7CFB00844696 /* TopicsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicsStore.m; sourceTree = "<group>"; };
 		7B882911A45D47A4A9F2E946 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -94,14 +121,31 @@
 		6447942015EC234C001CEBB0 /* hopup */ = {
 			isa = PBXGroup;
 			children = (
+				64822A0415ED70B400844696 /* AllTopicsViewController.h */,
+				64822A0515ED70B500844696 /* AllTopicsViewController.m */,
+				64822A0615ED70B500844696 /* AllTopicsViewController.xib */,
 				6447942915EC234C001CEBB0 /* AppDelegate.h */,
 				6447942A15EC234C001CEBB0 /* AppDelegate.m */,
+				64822A0C15ED73CC00844696 /* MBProgressHUD.h */,
+				64822A0D15ED73CC00844696 /* MBProgressHUD.m */,
 				644794CD15EC358D001CEBB0 /* MenuViewController.h */,
 				644794CE15EC358D001CEBB0 /* MenuViewController.m */,
+				648229FA15ED560400844696 /* MenuTableViewCell.h */,
+				648229FB15ED560400844696 /* MenuTableViewCell.m */,
+				64822A0F15ED758000844696 /* MyTopicsViewController.h */,
+				64822A1015ED758000844696 /* MyTopicsViewController.m */,
+				64822A1115ED758000844696 /* MyTopicsViewController.xib */,
 				644794C015EC3022001CEBB0 /* SignInViewController.h */,
 				644794C115EC3022001CEBB0 /* SignInViewController.m */,
 				644794C215EC3022001CEBB0 /* SignInViewController.xib */,
 				644794D715EC3E62001CEBB0 /* SignInViewControllerDelegate.h */,
+				648229F515ED543E00844696 /* SubscriptionsViewController.h */,
+				648229F615ED543E00844696 /* SubscriptionsViewController.m */,
+				648229F715ED543E00844696 /* SubscriptionsViewController.xib */,
+				64822A1415ED7CFB00844696 /* TopicsStore.h */,
+				64822A1515ED7CFB00844696 /* TopicsStore.m */,
+				64822A0915ED71E800844696 /* TopicTableViewCell.h */,
+				64822A0A15ED71E800844696 /* TopicTableViewCell.m */,
 				644794F415EC5AF5001CEBB0 /* User.h */,
 				644794F515EC5AF5001CEBB0 /* User.m */,
 				6447942115EC234C001CEBB0 /* Supporting Files */,
@@ -174,6 +218,9 @@
 			files = (
 				6447942515EC234C001CEBB0 /* InfoPlist.strings in Resources */,
 				644794C415EC3022001CEBB0 /* SignInViewController.xib in Resources */,
+				648229F915ED543E00844696 /* SubscriptionsViewController.xib in Resources */,
+				64822A0815ED70B500844696 /* AllTopicsViewController.xib in Resources */,
+				64822A1315ED758000844696 /* MyTopicsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,6 +253,13 @@
 				644794C315EC3022001CEBB0 /* SignInViewController.m in Sources */,
 				644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */,
 				644794F615EC5AF5001CEBB0 /* User.m in Sources */,
+				648229F815ED543E00844696 /* SubscriptionsViewController.m in Sources */,
+				648229FC15ED560400844696 /* MenuTableViewCell.m in Sources */,
+				64822A0715ED70B500844696 /* AllTopicsViewController.m in Sources */,
+				64822A0B15ED71E800844696 /* TopicTableViewCell.m in Sources */,
+				64822A0E15ED73CC00844696 /* MBProgressHUD.m in Sources */,
+				64822A1215ED758000844696 /* MyTopicsViewController.m in Sources */,
+				64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

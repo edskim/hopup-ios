@@ -25,7 +25,6 @@ NSString *applicationURL;
     self.window.backgroundColor = [UIColor whiteColor];
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MenuViewController new]];
-    
     [self.window makeKeyAndVisible];
     return YES;
 }
