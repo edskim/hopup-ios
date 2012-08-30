@@ -13,8 +13,8 @@
 
 @interface TopicsStore () <RKRequestDelegate>
 extern NSString *applicationURL;
-@property (strong) NSMutableArray *topics;
-@property (strong) NSMutableDictionary *topicsByUserId;
+@property (strong) NSArray *topics;
+@property (strong) NSDictionary *topicsByUserId;
 @end
 
 @implementation TopicsStore
@@ -38,23 +38,17 @@ extern NSString *applicationURL;
     static TopicsStore *sharedStore = nil;
     if (!sharedStore) {
         sharedStore = [[super allocWithZone:nil] init];
-        sharedStore.topics = [NSMutableArray new];
-        sharedStore.topicsByUserId = [NSMutableDictionary new];
     }
     return sharedStore;
 }
 
 - (void)cacheTopics {
-    self.topics = [NSMutableArray new];
-    self.topicsByUserId = [NSMutableDictionary new];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self requestTopics];
     });
 }
 
 - (void)cacheTopicsWithBlock:(void (^)(void))block {
-    self.topics = [NSMutableArray new];
-    self.topicsByUserId = [NSMutableDictionary new];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [RKClient clientWithBaseURLString:applicationURL];
         RKClient *client = [RKClient sharedClient];
@@ -91,14 +85,15 @@ extern NSString *applicationURL;
 
 }
 - (void)createTopicsByUserId {
-    self.topicsByUserId = [NSMutableDictionary new];
+    NSMutableDictionary *tempDic = [NSMutableDictionary new];
     for (Topic *topic in self.topics) {
         NSString *userId = [NSString stringWithFormat:@"%d",topic.creatorId];
-        if (![self.topicsByUserId objectForKey:userId]) {
-            [self.topicsByUserId setValue:[NSMutableArray new] forKey:userId];
+        if (![tempDic objectForKey:userId]) {
+            [tempDic setValue:[NSMutableArray new] forKey:userId];
         }
-        [[self.topicsByUserId objectForKey:userId] addObject:topic];
+        [[tempDic objectForKey:userId] addObject:topic];
     }
+    self.topicsByUserId = tempDic;
 }
 
 #pragma mark RKRequest helper
@@ -110,19 +105,20 @@ extern NSString *applicationURL;
 
 #pragma mark RKResponse handling and parsing
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response {
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self parseRKResponse:response];
-    });
+    //for some reason exception thrown on signout/login when this is queued
+    [self parseRKResponse:response];
 }
 
 - (void)parseRKResponse:(RKResponse *)response {
+    NSMutableArray *tempArr = [NSMutableArray new];
     id parsedResponse = [response parsedBody:nil];
     for (id item in parsedResponse) {
         Topic *newTopic = [[Topic alloc] init];
         newTopic.name = [item objectForKey:@"name"];
         newTopic.creatorId = [[item objectForKey:@"creator_id"] integerValue];
-        [self.topics addObject:newTopic];
+        [tempArr addObject:newTopic];
     }
+    self.topics = tempArr;
     [self populateTopicsByUserId];
 }
 

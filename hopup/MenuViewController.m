@@ -25,15 +25,19 @@
 @implementation MenuViewController
 @synthesize signedIn;
 
+- (void)resetMenuControllers {
+    self.menuControllers = [NSMutableArray new];
+    [self.menuControllers addObject:[AllTopicsViewController new]];
+    [self.menuControllers addObject:[MyTopicsViewController new]];
+    [self.menuControllers addObject:[SubscriptionsViewController new]];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.menuControllers = [NSMutableArray new];
-        [self.menuControllers addObject:[AllTopicsViewController new]];
-        [self.menuControllers addObject:[MyTopicsViewController new]];
-        [self.menuControllers addObject:[SubscriptionsViewController new]];
+        [self resetMenuControllers];
     }
     return self;
 }
@@ -94,6 +98,7 @@
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
     [CurrentUser currentUser].cookies = nil;
+    [self resetMenuControllers];
 }
 
 - (void)showSignInScreen {
