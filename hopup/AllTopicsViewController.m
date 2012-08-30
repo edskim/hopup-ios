@@ -7,6 +7,9 @@
 //
 
 #import "AllTopicsViewController.h"
+#import "Topic.h"
+#import "TopicsStore.h"
+#import "TopicTableViewCell.h"
 
 @interface AllTopicsViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +28,12 @@
         self.details = @"See all topics available";
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)viewDidLoad
@@ -53,11 +62,16 @@
 
 #pragma mark Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    TopicsStore *sharedStore = [TopicsStore sharedStore];
+    TopicTableViewCell *newCell = [[TopicTableViewCell alloc] init];
+    Topic *topic = [[sharedStore allTopics] objectAtIndex:indexPath.row];
+    newCell.textLabel.text = topic.name;
+    return newCell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    TopicsStore *sharedStore = [TopicsStore sharedStore];
+    return [[sharedStore allTopics] count];
 }
 
 @end

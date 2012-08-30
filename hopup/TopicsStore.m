@@ -6,17 +6,20 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "Topic.h"
 #import "TopicsStore.h"
 #import "RestKit.h"
 
 
-
 @interface TopicsStore () <RKRequestDelegate>
 extern NSString *applicationURL;
-@property (strong) NSArray *topics;
+@property (strong) NSMutableArray *topics;
+@property (strong) NSMutableDictionary *topicsByUserId;
 @end
 
 @implementation TopicsStore
+@synthesize topics;
+@synthesize topicsByUserId;
 
 - (id)init {
     self = [super init];
@@ -33,32 +36,96 @@ extern NSString *applicationURL;
 + (TopicsStore*)sharedStore {
     //shared instance never destroyed because static pointer is strong pointer
     static TopicsStore *sharedStore = nil;
-    if (!sharedStore)
+    if (!sharedStore) {
         sharedStore = [[super allocWithZone:nil] init];
+        sharedStore.topics = [NSMutableArray new];
+        sharedStore.topicsByUserId = [NSMutableDictionary new];
+    }
     return sharedStore;
 }
 
 - (void)cacheTopics {
+    self.topics = [NSMutableArray new];
+    self.topicsByUserId = [NSMutableDictionary new];
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self requestTopics];
+    });
+}
+
+- (void)cacheTopicsWithBlock:(void (^)(void))block {
+    self.topics = [NSMutableArray new];
+    self.topicsByUserId = [NSMutableDictionary new];
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [RKClient clientWithBaseURLString:applicationURL];
         RKClient *client = [RKClient sharedClient];
-        [client get:@"topics.json" delegate:self];
+        [client get:@"topics.json" usingBlock:^(RKRequest *request) {
+            request.onDidLoadResponse = ^(RKResponse *response) {
+                [self parseRKResponse:response];
+                dispatch_async(dispatch_get_main_queue(), block);
+            };
+        }];
     });
 }
 
 - (NSArray*)allTopics {
-    if (!self.topics) {
-        [RKClient clientWithBaseURLString:applicationURL];
-        RKClient *client = [RKClient sharedClient];
-        [client get:@"topics.json" delegate:self];
-    }
     return self.topics;
 }
 
+- (NSArray*)topicsWithUserId:(int)userId {
+    if ([self.topicsByUserId count] == 0) {
+        [self populateTopicsByUserId];
+    }
+    return [self.topicsByUserId objectForKey:[NSString stringWithFormat:@"%d",userId]];
+}
+
+#pragma mark Helper Methods
+
+- (void)populateTopicsByUserId {
+    if (!self.topics || [self.topics count] == 0) {
+        [self cacheTopicsWithBlock:^{
+            [self createTopicsByUserId];
+        }];
+    } else {
+        [self createTopicsByUserId];
+    }
+
+}
+- (void)createTopicsByUserId {
+    self.topicsByUserId = [NSMutableDictionary new];
+    for (Topic *topic in self.topics) {
+        NSString *userId = [NSString stringWithFormat:@"%d",topic.creatorId];
+        if (![self.topicsByUserId objectForKey:userId]) {
+            [self.topicsByUserId setValue:[NSMutableArray new] forKey:userId];
+        }
+        [[self.topicsByUserId objectForKey:userId] addObject:topic];
+    }
+}
+
+#pragma mark RKRequest helper
+- (void)requestTopics {
+    [RKClient clientWithBaseURLString:applicationURL];
+    RKClient *client = [RKClient sharedClient];
+    [client get:@"topics.json" delegate:self];
+}
+
+#pragma mark RKResponse handling and parsing
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        
+        [self parseRKResponse:response];
     });
 }
+
+- (void)parseRKResponse:(RKResponse *)response {
+    id parsedResponse = [response parsedBody:nil];
+    for (id item in parsedResponse) {
+        Topic *newTopic = [[Topic alloc] init];
+        newTopic.name = [item objectForKey:@"name"];
+        newTopic.creatorId = [[item objectForKey:@"creator_id"] integerValue];
+        [self.topics addObject:newTopic];
+    }
+    [self populateTopicsByUserId];
+}
+
+
 
 @end

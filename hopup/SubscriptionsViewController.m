@@ -7,6 +7,7 @@
 //
 
 #import "SubscriptionsViewController.h"
+#import "TopicsStore.h"
 
 @interface SubscriptionsViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -26,6 +27,12 @@
         self.details = @"See the topics you have subscribed to";
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
+        [self.tableView reloadData];
+    }];
 }
 
 - (void)viewDidLoad

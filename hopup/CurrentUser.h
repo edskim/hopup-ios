@@ -1,14 +1,16 @@
 //
-//  User.h
+//  CurrentUser.h
 //  hopup
 //
-//  Created by Edward Kim on 8/27/12.
+//  Created by Edward Kim on 8/29/12.
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface User : NSObject
+@interface CurrentUser : NSObject
 @property (strong) NSString *username;
+@property (strong) NSArray *cookies;
 @property int userId;
++ (CurrentUser*)currentUser;
 @end

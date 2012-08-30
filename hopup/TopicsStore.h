@@ -11,5 +11,7 @@
 @interface TopicsStore : NSObject
 + (TopicsStore*)sharedStore;
 - (NSArray*)allTopics;
+- (NSArray*)topicsWithUserId:(int)userId;
 - (void)cacheTopics;
+- (void)cacheTopicsWithBlock:(void(^)(void))block;
 @end

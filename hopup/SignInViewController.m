@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "CurrentUser.h"
 #import "SignInViewController.h"
 #import "MBProgressHUD.h"
 #import "MenuViewController.h"
@@ -72,9 +73,6 @@ extern NSString* applicationURL;
                                               @"password",self.passwordBox.text, nil];
             NSDictionary *params = [NSDictionary dictionaryWithObject:userNamePassword forKey:@"session"];
             [client post:@"sessions.json" params:params delegate:self];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            });
         });
         
     } else {
@@ -95,16 +93,22 @@ extern NSString* applicationURL;
 }
 
 //RKRequestDelegate
-- (void)request:(RKRequest *)request didReceiveResponse:(RKResponse *)response {
+- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response {
     if ([response isSuccessful]) {
-        User *newUser = [User new];
-        newUser.username = self.usernameBox.text;
-        newUser.cookies = [response cookies];
-        [delegate signInViewController:self signInSuccessfull:YES withUser:newUser];
+        CurrentUser *currentUser = [CurrentUser currentUser];
+        currentUser.cookies = [response cookies];
+        
+        id parsedObject = [response parsedBody:nil];
+        currentUser.username = [parsedObject objectForKey:@"email"];
+        currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
+        
+        [delegate signInViewController:self signInSuccessfull:YES];
     } else {
         self.errorBox.text = @"Invalid username or password";
-        [delegate signInViewController:self signInSuccessfull:NO withUser:nil];
+        [delegate signInViewController:self signInSuccessfull:NO];
     }
+
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end

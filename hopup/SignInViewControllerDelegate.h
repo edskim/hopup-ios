@@ -12,6 +12,6 @@
 
 @protocol SignInViewControllerDelegate <NSObject>
 
-- (void)signInViewController:(SignInViewController*)controller signInSuccessfull:(BOOL)succeeded withUser:(User*)user;
+- (void)signInViewController:(SignInViewController*)controller signInSuccessfull:(BOOL)succeeded;
 
 @end

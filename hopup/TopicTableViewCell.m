@@ -16,6 +16,7 @@
     if (self) {
         self.textLabel.textColor = [UIColor orangeColor];
         self.detailTextLabel.textColor = [UIColor lightGrayColor];
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return self;
 }

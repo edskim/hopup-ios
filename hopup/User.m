@@ -10,5 +10,5 @@
 
 @implementation User
 @synthesize username;
-@synthesize cookies;
+@synthesize userId;
 @end

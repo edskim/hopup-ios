@@ -29,6 +29,8 @@
 		64822A1215ED758000844696 /* MyTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1015ED758000844696 /* MyTopicsViewController.m */; };
 		64822A1315ED758000844696 /* MyTopicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64822A1115ED758000844696 /* MyTopicsViewController.xib */; };
 		64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1515ED7CFB00844696 /* TopicsStore.m */; };
+		64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A1C09D15EEEBE100A71B48 /* Topic.m */; };
+		64A1C0B715EF249D00A71B48 /* CurrentUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A1C0B615EF249D00A71B48 /* CurrentUser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,10 @@
 		64822A1115ED758000844696 /* MyTopicsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MyTopicsViewController.xib; sourceTree = "<group>"; };
 		64822A1415ED7CFB00844696 /* TopicsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicsStore.h; sourceTree = "<group>"; };
 		64822A1515ED7CFB00844696 /* TopicsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicsStore.m; sourceTree = "<group>"; };
+		64A1C09C15EEEBE100A71B48 /* Topic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Topic.h; sourceTree = "<group>"; };
+		64A1C09D15EEEBE100A71B48 /* Topic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Topic.m; sourceTree = "<group>"; };
+		64A1C0B515EF249D00A71B48 /* CurrentUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentUser.h; sourceTree = "<group>"; };
+		64A1C0B615EF249D00A71B48 /* CurrentUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentUser.m; sourceTree = "<group>"; };
 		7B882911A45D47A4A9F2E946 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -126,6 +132,8 @@
 				64822A0615ED70B500844696 /* AllTopicsViewController.xib */,
 				6447942915EC234C001CEBB0 /* AppDelegate.h */,
 				6447942A15EC234C001CEBB0 /* AppDelegate.m */,
+				64A1C0B515EF249D00A71B48 /* CurrentUser.h */,
+				64A1C0B615EF249D00A71B48 /* CurrentUser.m */,
 				64822A0C15ED73CC00844696 /* MBProgressHUD.h */,
 				64822A0D15ED73CC00844696 /* MBProgressHUD.m */,
 				644794CD15EC358D001CEBB0 /* MenuViewController.h */,
@@ -142,6 +150,8 @@
 				648229F515ED543E00844696 /* SubscriptionsViewController.h */,
 				648229F615ED543E00844696 /* SubscriptionsViewController.m */,
 				648229F715ED543E00844696 /* SubscriptionsViewController.xib */,
+				64A1C09C15EEEBE100A71B48 /* Topic.h */,
+				64A1C09D15EEEBE100A71B48 /* Topic.m */,
 				64822A1415ED7CFB00844696 /* TopicsStore.h */,
 				64822A1515ED7CFB00844696 /* TopicsStore.m */,
 				64822A0915ED71E800844696 /* TopicTableViewCell.h */,
@@ -260,6 +270,8 @@
 				64822A0E15ED73CC00844696 /* MBProgressHUD.m in Sources */,
 				64822A1215ED758000844696 /* MyTopicsViewController.m in Sources */,
 				64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */,
+				64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */,
+				64A1C0B715EF249D00A71B48 /* CurrentUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

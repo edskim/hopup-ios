@@ -7,6 +7,7 @@
 //
 
 #import "AllTopicsViewController.h"
+#import "CurrentUser.h"
 #import "MenuViewController.h"
 #import "MenuTableViewCell.h"
 #import "MyTopicsViewController.h"
@@ -23,7 +24,6 @@
 
 @implementation MenuViewController
 @synthesize signedIn;
-@synthesize user;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -78,12 +78,11 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)signInWithUser:(User*)newUser {
+- (void)signIn {
     self.signedIn = YES;
-    self.user = newUser;
-    self.title = newUser.username;
+    self.title = [CurrentUser currentUser].username;
     
-    for (NSHTTPCookie *cookie in newUser.cookies) {
+    for (NSHTTPCookie *cookie in [CurrentUser currentUser].cookies) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     }
 }
@@ -91,10 +90,10 @@
 - (void)signOut {
     self.signedIn = NO;
     self.title = nil;
-    for (NSHTTPCookie *cookie in self.user.cookies) {
+    for (NSHTTPCookie *cookie in [CurrentUser currentUser].cookies) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
-    self.user = nil;
+    [CurrentUser currentUser].cookies = nil;
 }
 
 - (void)showSignInScreen {
@@ -106,10 +105,10 @@
 }
 
 #pragma mark SignInViewController delegate methods
-- (void)signInViewController:(SignInViewController *)controller signInSuccessfull:(BOOL)succeeded withUser:(User *)newUser {
+- (void)signInViewController:(SignInViewController *)controller signInSuccessfull:(BOOL)succeeded {
     if (succeeded) {
         [self dismissModalViewControllerAnimated:YES];
-        [self signInWithUser:newUser];
+        [self signIn];
         [[TopicsStore sharedStore] cacheTopics];
     } else {
 
