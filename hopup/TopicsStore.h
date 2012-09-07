@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface TopicsStore : NSObject
+@property (strong,readonly) NSDictionary *topicsByTopicId;
 + (TopicsStore*)sharedStore;
 - (NSArray*)allTopics;
 - (NSArray*)topicsWithUserId:(int)userId;

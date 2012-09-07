@@ -8,6 +8,7 @@
 
 #import "RestKit.h"
 #import "SessionStore.h"
+#import "SubscriptionsStore.h"
 #import "TopicsStore.h"
 #import "User.h"
 
@@ -71,7 +72,9 @@ extern NSString* applicationURL;
                         for (NSHTTPCookie *cookie in self.cookies) {
                             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
                         }
-                        [[TopicsStore sharedStore] cacheTopics];
+                        [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
+                            [[SubscriptionsStore sharedStore] cacheSubscriptions];
+                        }];
                     }
                     block(self.signedIn);
                 };

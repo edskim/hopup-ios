@@ -27,6 +27,8 @@
 		64822A1215ED758000844696 /* MyTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1015ED758000844696 /* MyTopicsViewController.m */; };
 		64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1515ED7CFB00844696 /* TopicsStore.m */; };
 		649CE57615FA84CB00F38512 /* SessionStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57515FA84CB00F38512 /* SessionStore.m */; };
+		649CE57A15FAA38B00F38512 /* SubscriptionsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57915FAA38B00F38512 /* SubscriptionsStore.m */; };
+		649CE57D15FAA71C00F38512 /* Subscription.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57C15FAA71C00F38512 /* Subscription.m */; };
 		64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A1C09D15EEEBE100A71B48 /* Topic.m */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,10 @@
 		64822A1515ED7CFB00844696 /* TopicsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicsStore.m; sourceTree = "<group>"; };
 		649CE57415FA84CB00F38512 /* SessionStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SessionStore.h; sourceTree = "<group>"; };
 		649CE57515FA84CB00F38512 /* SessionStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SessionStore.m; sourceTree = "<group>"; };
+		649CE57815FAA38B00F38512 /* SubscriptionsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionsStore.h; sourceTree = "<group>"; };
+		649CE57915FAA38B00F38512 /* SubscriptionsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionsStore.m; sourceTree = "<group>"; };
+		649CE57B15FAA71C00F38512 /* Subscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscription.h; sourceTree = "<group>"; };
+		649CE57C15FAA71C00F38512 /* Subscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscription.m; sourceTree = "<group>"; };
 		64A1C09C15EEEBE100A71B48 /* Topic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Topic.h; sourceTree = "<group>"; };
 		64A1C09D15EEEBE100A71B48 /* Topic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Topic.m; sourceTree = "<group>"; };
 		7B882911A45D47A4A9F2E946 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +159,8 @@
 				64822A1515ED7CFB00844696 /* TopicsStore.m */,
 				649CE57415FA84CB00F38512 /* SessionStore.h */,
 				649CE57515FA84CB00F38512 /* SessionStore.m */,
+				649CE57815FAA38B00F38512 /* SubscriptionsStore.h */,
+				649CE57915FAA38B00F38512 /* SubscriptionsStore.m */,
 			);
 			name = "Data Store";
 			sourceTree = "<group>";
@@ -160,6 +168,8 @@
 		649CE57015FA80B400F38512 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				649CE57B15FAA71C00F38512 /* Subscription.h */,
+				649CE57C15FAA71C00F38512 /* Subscription.m */,
 				64A1C09C15EEEBE100A71B48 /* Topic.h */,
 				64A1C09D15EEEBE100A71B48 /* Topic.m */,
 				644794F415EC5AF5001CEBB0 /* User.h */,
@@ -308,6 +318,8 @@
 				64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */,
 				64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */,
 				649CE57615FA84CB00F38512 /* SessionStore.m in Sources */,
+				649CE57A15FAA38B00F38512 /* SubscriptionsStore.m in Sources */,
+				649CE57D15FAA71C00F38512 /* Subscription.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

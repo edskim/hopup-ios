@@ -11,7 +11,7 @@
 #import "RestKit.h"
 
 
-@interface TopicsStore () <RKRequestDelegate>
+@interface TopicsStore ()
 extern NSString *applicationURL;
 @property (strong) NSArray *topics;
 @property (strong) NSDictionary *topicsByUserId;
@@ -20,10 +20,12 @@ extern NSString *applicationURL;
 @implementation TopicsStore
 @synthesize topics;
 @synthesize topicsByUserId;
+@synthesize topicsByTopicId = _topicsByTopicId;
 
 - (id)init {
     self = [super init];
     if (self) {
+        _topicsByTopicId = [NSDictionary new];
     }
     return self;
 }
@@ -43,9 +45,7 @@ extern NSString *applicationURL;
 }
 
 - (void)cacheTopics {
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self requestTopics];
-    });
+    [self cacheTopicsWithBlock:^{}];
 }
 
 - (void)cacheTopicsWithBlock:(void (^)(void))block {
@@ -66,51 +66,15 @@ extern NSString *applicationURL;
 }
 
 - (NSArray*)topicsWithUserId:(int)userId {
-    if ([self.topicsByUserId count] == 0) {
-        [self populateTopicsByUserId];
-    }
     return [self.topicsByUserId objectForKey:[NSString stringWithFormat:@"%d",userId]];
 }
 
 #pragma mark Helper Methods
 
-- (void)populateTopicsByUserId {
-    if (!self.topics || [self.topics count] == 0) {
-        [self cacheTopicsWithBlock:^{
-            [self createTopicsByUserId];
-        }];
-    } else {
-        [self createTopicsByUserId];
-    }
-
-}
-- (void)createTopicsByUserId {
-    NSMutableDictionary *tempDic = [NSMutableDictionary new];
-    for (Topic *topic in self.topics) {
-        NSString *userId = [NSString stringWithFormat:@"%d",topic.creatorId];
-        if (![tempDic objectForKey:userId]) {
-            [tempDic setValue:[NSMutableArray new] forKey:userId];
-        }
-        [[tempDic objectForKey:userId] addObject:topic];
-    }
-    self.topicsByUserId = tempDic;
-}
-
-#pragma mark RKRequest helper
-- (void)requestTopics {
-    [RKClient clientWithBaseURLString:applicationURL];
-    RKClient *client = [RKClient sharedClient];
-    [client get:@"topics.json" delegate:self];
-}
-
-#pragma mark RKResponse handling and parsing
-- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response {
-    //for some reason exception thrown on signout/login when this is queued
-    [self parseRKResponse:response];
-}
-
 - (void)parseRKResponse:(RKResponse *)response {
     NSMutableArray *tempArr = [NSMutableArray new];
+    NSMutableDictionary *tempUserIdDic = [NSMutableDictionary new];
+    NSMutableDictionary *tempTopicIdDic = [NSMutableDictionary new];
     id parsedResponse = [response parsedBody:nil];
     for (id item in parsedResponse) {
         Topic *newTopic = [[Topic alloc] init];
@@ -118,11 +82,20 @@ extern NSString *applicationURL;
         newTopic.creatorId = [[item objectForKey:@"creator_id"] integerValue];
         newTopic.topicId = [[item objectForKey:@"id"] integerValue];
         [tempArr addObject:newTopic];
+        
+        //add topic to dictionary by user id
+        NSString *userId = [NSString stringWithFormat:@"%d",newTopic.creatorId];
+        if (![tempUserIdDic objectForKey:userId]) {
+            [tempUserIdDic setValue:[NSMutableArray new] forKey:userId];
+        }
+        [[tempUserIdDic objectForKey:userId] addObject:newTopic];
+        
+        //add topic to dictionary by topic id
+        [tempTopicIdDic setObject:newTopic forKey:[NSNumber numberWithInt:newTopic.topicId]];
     }
     self.topics = tempArr;
-    [self populateTopicsByUserId];
+    self.topicsByUserId = tempUserIdDic;
+    _topicsByTopicId = tempTopicIdDic;
 }
-
-
 
 @end
