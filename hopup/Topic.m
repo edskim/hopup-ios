@@ -9,5 +9,5 @@
 #import "Topic.h"
 
 @implementation Topic
-@synthesize name, creatorId;
+@synthesize name, creatorId, topicId;
 @end

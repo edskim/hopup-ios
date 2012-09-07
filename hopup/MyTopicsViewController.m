@@ -6,14 +6,15 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
-#import "CurrentUser.h"
 #import "MyTopicsViewController.h"
+#import "SessionStore.h"
 #import "Topic.h"
 #import "TopicsStore.h"
 #import "TopicTableViewCell.h"
+#import "User.h"
 
-@interface MyTopicsViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface MyTopicsViewController () <UITableViewDataSource,UITableViewDelegate>
+@property (strong) UITableView *tableView;
 
 @end
 
@@ -36,10 +37,20 @@
     }];
 }
 
+- (void)loadView {
+    CGRect tableViewRect = [[UIScreen mainScreen] bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:tableViewRect];
+    self.view = self.tableView;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
+    
+    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"My Topics" style:UIBarButtonItemStyleBordered target:nil action:nil]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor =[UIColor darkGrayColor];
 }
 
 - (void)viewDidUnload
@@ -62,14 +73,14 @@
 
 #pragma mark Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Topic *topic = [[[TopicsStore sharedStore] topicsWithUserId:[CurrentUser currentUser].userId] objectAtIndex:indexPath.row];
+    Topic *topic = [[[TopicsStore sharedStore] topicsWithUserId:[SessionStore sharedStore].currentUser.userId] objectAtIndex:indexPath.row];
     TopicTableViewCell *newCell = [TopicTableViewCell new];
     newCell.textLabel.text = topic.name;
     return newCell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[TopicsStore sharedStore] topicsWithUserId:[CurrentUser currentUser].userId] count];
+    return [[[TopicsStore sharedStore] topicsWithUserId:[SessionStore sharedStore].currentUser.userId] count];
 }
 
 @end

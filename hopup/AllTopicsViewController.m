@@ -11,8 +11,8 @@
 #import "TopicsStore.h"
 #import "TopicTableViewCell.h"
 
-@interface AllTopicsViewController ()
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@interface AllTopicsViewController () <UITableViewDataSource,UITableViewDelegate>
+@property (strong) UITableView *tableView;
 @property (strong) NSMutableArray *topics;
 @end
 
@@ -30,6 +30,17 @@
     return self;
 }
 
+-(void)loadView {
+    CGRect tableViewRect = [[UIScreen mainScreen] bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:tableViewRect];
+    self.view = self.tableView;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
+    
+    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"All Topics" style:UIBarButtonItemStyleBordered target:nil action:nil]];
+}
+
 - (void)viewWillAppear:(BOOL)animated {
     [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
         [self.tableView reloadData];
@@ -39,7 +50,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor =[UIColor darkGrayColor];
 }
 
 - (void)viewDidUnload

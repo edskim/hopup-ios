@@ -7,14 +7,14 @@
 //
 
 #import "AllTopicsViewController.h"
-#import "CurrentUser.h"
 #import "MenuViewController.h"
 #import "MenuTableViewCell.h"
 #import "MyTopicsViewController.h"
+#import "SessionStore.h"
 #import "SignInViewController.h"
 #import "SignInViewControllerDelegate.h"
 #import "SubscriptionsViewController.h"
-#import "TopicsStore.h"
+#import "User.h"
 
 @interface MenuViewController () <SignInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property BOOL signedIn;
@@ -84,20 +84,13 @@
 
 - (void)signIn {
     self.signedIn = YES;
-    self.title = [CurrentUser currentUser].username;
-    
-    for (NSHTTPCookie *cookie in [CurrentUser currentUser].cookies) {
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-    }
+    self.title = [SessionStore sharedStore].currentUser.username;
 }
 
 - (void)signOut {
     self.signedIn = NO;
     self.title = nil;
-    for (NSHTTPCookie *cookie in [CurrentUser currentUser].cookies) {
-        [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
-    }
-    [CurrentUser currentUser].cookies = nil;
+    [[SessionStore sharedStore] destroySessionWithBlock:^{}];
     [self resetMenuControllers];
 }
 
@@ -114,7 +107,6 @@
     if (succeeded) {
         [self dismissModalViewControllerAnimated:YES];
         [self signIn];
-        [[TopicsStore sharedStore] cacheTopics];
     } else {
 
     }

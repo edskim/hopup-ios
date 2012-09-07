@@ -116,6 +116,7 @@ extern NSString *applicationURL;
         Topic *newTopic = [[Topic alloc] init];
         newTopic.name = [item objectForKey:@"name"];
         newTopic.creatorId = [[item objectForKey:@"creator_id"] integerValue];
+        newTopic.topicId = [[item objectForKey:@"id"] integerValue];
         [tempArr addObject:newTopic];
     }
     self.topics = tempArr;

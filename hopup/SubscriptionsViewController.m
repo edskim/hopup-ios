@@ -10,7 +10,7 @@
 #import "TopicsStore.h"
 
 @interface SubscriptionsViewController () <UITableViewDataSource, UITableViewDelegate>
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong) UITableView *tableView;
 
 @end
 
@@ -35,10 +35,20 @@
     }];
 }
 
+- (void)loadView {
+    CGRect tableViewRect = [[UIScreen mainScreen] bounds];
+    self.tableView = [[UITableView alloc] initWithFrame:tableViewRect];
+    self.view = self.tableView;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
+    
+    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Subscriptions" style:UIBarButtonItemStyleBordered target:nil action:nil]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.tableView.backgroundColor = [UIColor darkGrayColor];
     // Do any additional setup after loading the view from its nib.
 }
 

@@ -6,16 +6,14 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
-#import "CurrentUser.h"
 #import "SignInViewController.h"
 #import "MBProgressHUD.h"
 #import "MenuViewController.h"
+#import "SessionStore.h"
 #import "SignInViewControllerDelegate.h"
-#import "RestKit.h"
 #import "User.h"
 
-@interface SignInViewController () <RKRequestDelegate,UITextFieldDelegate>
-extern NSString* applicationURL;
+@interface SignInViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *usernameBox;
 @property (weak, nonatomic) IBOutlet UITextField *passwordBox;
 @property (weak, nonatomic) IBOutlet UILabel *errorBox;
@@ -39,7 +37,6 @@ extern NSString* applicationURL;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [RKClient clientWithBaseURLString:applicationURL];
     [self.usernameBox setDelegate:self];
     [self.passwordBox setDelegate:self];
 }
@@ -63,17 +60,18 @@ extern NSString* applicationURL;
     [self.usernameBox resignFirstResponder];
     [self.passwordBox resignFirstResponder];
     
-    RKClient *client = [RKClient sharedClient];
     if ([self.usernameBox.text length]>0 && [self.passwordBox.text length]>0) {
         
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-            NSDictionary *userNamePassword = [NSDictionary dictionaryWithKeysAndObjects:
-                                              @"email",self.usernameBox.text,
-                                              @"password",self.passwordBox.text, nil];
-            NSDictionary *params = [NSDictionary dictionaryWithObject:userNamePassword forKey:@"session"];
-            [client post:@"sessions.json" params:params delegate:self];
-        });
+        [[SessionStore sharedStore] createSessionWithEmail:self.usernameBox.text withPassword:self.passwordBox.text withBlock:^(BOOL successful){
+            if (successful) {
+                [delegate signInViewController:self signInSuccessfull:YES];
+            } else {
+                self.errorBox.text = @"Invalid username or password";
+                [delegate signInViewController:self signInSuccessfull:NO];
+            }
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
         
     } else {
         if ([self.usernameBox.text length] ==0)
@@ -90,25 +88,6 @@ extern NSString* applicationURL;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
-}
-
-//RKRequestDelegate
-- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response {
-    if ([response isSuccessful]) {
-        CurrentUser *currentUser = [CurrentUser currentUser];
-        currentUser.cookies = [response cookies];
-        
-        id parsedObject = [response parsedBody:nil];
-        currentUser.username = [parsedObject objectForKey:@"email"];
-        currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
-        
-        [delegate signInViewController:self signInSuccessfull:YES];
-    } else {
-        self.errorBox.text = @"Invalid username or password";
-        [delegate signInViewController:self signInSuccessfull:NO];
-    }
-
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 @end

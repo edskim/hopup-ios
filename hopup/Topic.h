@@ -11,4 +11,5 @@
 @interface Topic : NSObject
 @property (strong) NSString *name;
 @property int creatorId;
+@property int topicId;
 @end
