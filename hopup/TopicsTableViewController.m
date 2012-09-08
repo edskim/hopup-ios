@@ -18,8 +18,10 @@
                                         UISearchBarDelegate>
 @property (strong) UITableView *tableView;
 @property (strong) NSMutableArray *topics;
+@property (strong) UISearchBar *searchBar;
 @property (strong) NSString *filterText;
 @property (strong) UIButton *shadedSearchViewButton;
+@property (strong) UIButton *shadedNewTopicButton;
 @property __block BOOL addingTopic;
 @end
 
@@ -29,6 +31,7 @@
 @synthesize backButtonText;
 @synthesize dataSourceBlock;
 @synthesize filterText;
+@synthesize searchBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,21 +59,15 @@
     
     //setup toolbar
     [self addAddButton];
-    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:self.navigationController.toolbar.frame];
-    [[[searchBar subviews] objectAtIndex:0] removeFromSuperview];
-    searchBar.placeholder = @"Search";
-
-    searchBar.delegate = self;
-    
-    self.navigationItem.titleView = searchBar;
+    self.searchBar = [[UISearchBar alloc] initWithFrame:self.navigationController.toolbar.frame];
+    [[[self.searchBar subviews] objectAtIndex:0] removeFromSuperview];
+    self.searchBar.placeholder = @"Search";
+    self.searchBar.delegate = self;
+    self.navigationItem.titleView = self.searchBar;
     
     [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:self.backButtonText style:UIBarButtonItemStyleBordered target:nil action:nil]];
     
-    self.shadedSearchViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.shadedSearchViewButton.frame = self.tableView.frame;
-    self.shadedSearchViewButton.backgroundColor = [UIColor blackColor];
-    self.shadedSearchViewButton.alpha = 0.5;
-    [self.shadedSearchViewButton addTarget:self action:@selector(leaveSearchEditingMode) forControlEvents:UIControlEventTouchUpInside];
+    [self setupShadedButtons];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -101,15 +98,19 @@
     self.addingTopic = YES;
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:insertPath] withRowAnimation:UITableViewRowAnimationLeft];
     [self.tableView scrollToRowAtIndexPath:insertPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.tableView addSubview:self.shadedNewTopicButton];
     [self addCancelButton];
+    [self.searchBar setUserInteractionEnabled:NO];
 }
 
-- (void)cancelAddTopic:(UIBarButtonItem*)button {
+- (void)cancelAddTopic {
+    [self.shadedNewTopicButton removeFromSuperview];
     [self addAddButton];
     [self.view endEditing:YES];
     self.addingTopic = NO;
     NSIndexPath *newTopicIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newTopicIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    [self.searchBar setUserInteractionEnabled:YES];
 }
 
 - (void)addAddButton {
@@ -118,7 +119,7 @@
 }
 
 - (void)addCancelButton {
-    UIBarButtonItem *cancelAddTopicButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStyleBordered target:self action:@selector(cancelAddTopic:)];
+    UIBarButtonItem *cancelAddTopicButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonItemStyleBordered target:self action:@selector(cancelAddTopic)];
     cancelAddTopicButton.title = @"Cancel";
     self.navigationItem.rightBarButtonItem = cancelAddTopicButton;
 }
@@ -135,6 +136,23 @@
         }
     }
     return filteredTopics;
+}
+
+- (void)setupShadedButtons {
+    self.shadedSearchViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.shadedSearchViewButton.frame = self.tableView.frame;
+    self.shadedSearchViewButton.backgroundColor = [UIColor blackColor];
+    self.shadedSearchViewButton.alpha = 0.5;
+    [self.shadedSearchViewButton addTarget:self action:@selector(leaveSearchEditingMode) forControlEvents:UIControlEventTouchUpInside];
+    
+    self.shadedNewTopicButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    NewTopicCell *cell = [[NewTopicCell alloc] init];
+    CGFloat insertCellHeight = cell.bounds.size.height;
+    CGRect shadedButtonFrame = CGRectMake(self.tableView.frame.origin.x, self.tableView.frame.origin.y + insertCellHeight, self.tableView.bounds.size.width, self.tableView.bounds.size.height - insertCellHeight);
+    self.shadedNewTopicButton.frame = shadedButtonFrame;
+    self.shadedNewTopicButton.backgroundColor = [UIColor blackColor];
+    self.shadedNewTopicButton.alpha = 0.5;
+    [self.shadedNewTopicButton addTarget:self action:@selector(cancelAddTopic) forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark Delegate methods
@@ -169,7 +187,7 @@
         [[TopicsStore sharedStore] createTopicWithName:textField.text withBlock:^{
             [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
                 [self.tableView reloadData];
-                [self cancelAddTopic:nil];
+                [self cancelAddTopic];
                 [MBProgressHUD hideHUDForView:self.view animated:YES];
             }];
         }];
