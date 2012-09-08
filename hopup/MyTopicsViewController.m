@@ -15,11 +15,13 @@
 
 @interface MyTopicsViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (strong) UITableView *tableView;
+@property (strong) UIBarButtonItem *addTopicButton;
 
 @end
 
 @implementation MyTopicsViewController
 @synthesize tableView;
+@synthesize addTopicButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,6 +47,9 @@
     self.tableView.dataSource = self;
     [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
     
+    self.addTopicButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTopic:)];
+    self.navigationItem.rightBarButtonItem = self.addTopicButton;
+    
     [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"My Topics" style:UIBarButtonItemStyleBordered target:nil action:nil]];
 }
 
@@ -64,6 +69,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark helper methods
+- (void)addTopic:(UIBarButtonItem*)button {
+    
 }
 
 #pragma mark Delegate methods

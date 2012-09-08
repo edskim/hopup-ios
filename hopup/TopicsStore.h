@@ -13,6 +13,8 @@
 + (TopicsStore*)sharedStore;
 - (NSArray*)allTopics;
 - (NSArray*)topicsWithUserId:(int)userId;
+- (void)createTopicWithName:(NSString*)name;
+- (void)createTopicWithName:(NSString*)name withBlock:(void(^)(void))block;
 - (void)cacheTopics;
 - (void)cacheTopicsWithBlock:(void(^)(void))block;
 @end

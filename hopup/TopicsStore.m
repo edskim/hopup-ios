@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "RestKit.h"
+#import "SessionStore.h"
 #import "Topic.h"
 #import "TopicsStore.h"
-#import "RestKit.h"
+#import "User.h"
 
 
 @interface TopicsStore ()
@@ -26,6 +28,7 @@ extern NSString *applicationURL;
     self = [super init];
     if (self) {
         _topicsByTopicId = [NSDictionary new];
+        [RKClient clientWithBaseURLString:applicationURL];
     }
     return self;
 }
@@ -44,13 +47,32 @@ extern NSString *applicationURL;
     return sharedStore;
 }
 
+- (void)createTopicWithName:(NSString *)name {
+    [self createTopicWithName:name withBlock:^{}];
+}
+
+- (void)createTopicWithName:(NSString *)name withBlock:(void (^)(void))block {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        RKClient *client = [RKClient sharedClient];
+        [client post:@"topics.json" usingBlock:^(RKRequest *request) {
+            int userId = [[[SessionStore sharedStore] currentUser] userId];
+            NSDictionary *topic = [NSDictionary dictionaryWithKeysAndObjects:
+                                    @"name",name,
+                                    @"creator_id",@(userId), nil];
+            request.params = [NSDictionary dictionaryWithObject:topic forKey:@"topic"];
+            request.onDidLoadResponse = ^(RKResponse *response) {
+                dispatch_async(dispatch_get_main_queue(), block);
+            };
+        }];
+    });
+}
+
 - (void)cacheTopics {
     [self cacheTopicsWithBlock:^{}];
 }
 
 - (void)cacheTopicsWithBlock:(void (^)(void))block {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [RKClient clientWithBaseURLString:applicationURL];
         RKClient *client = [RKClient sharedClient];
         [client get:@"topics.json" usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {
