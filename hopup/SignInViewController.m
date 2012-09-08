@@ -87,6 +87,7 @@
 //uitextfield delegate
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
+    [self signinPressed:nil];
     return NO;
 }
 

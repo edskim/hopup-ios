@@ -13,9 +13,13 @@
 #import "TopicsTableViewController.h"
 #import "TopicTableViewCell.h"
 
-@interface TopicsTableViewController () <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
+@interface TopicsTableViewController () <UITableViewDataSource,UITableViewDelegate,
+                                        UITextFieldDelegate,UIGestureRecognizerDelegate,
+                                        UISearchBarDelegate>
 @property (strong) UITableView *tableView;
 @property (strong) NSMutableArray *topics;
+@property (strong) NSString *filterText;
+@property (strong) UIButton *shadedSearchViewButton;
 @property __block BOOL addingTopic;
 @end
 
@@ -24,6 +28,7 @@
 @synthesize details;
 @synthesize backButtonText;
 @synthesize dataSourceBlock;
+@synthesize filterText;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,12 +54,23 @@
     self.tableView.dataSource = self;
     [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
     
-    
+    //setup toolbar
     [self addAddButton];
-    //    UISearchBar *testSearch = [[UISearchBar alloc] initWithFrame:self.navigationController.toolbar.frame];
-    //    self.navigationItem.titleView = testSearch;
+    UISearchBar *searchBar = [[UISearchBar alloc] initWithFrame:self.navigationController.toolbar.frame];
+    [[[searchBar subviews] objectAtIndex:0] removeFromSuperview];
+    searchBar.placeholder = @"Search";
+
+    searchBar.delegate = self;
+    
+    self.navigationItem.titleView = searchBar;
     
     [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:self.backButtonText style:UIBarButtonItemStyleBordered target:nil action:nil]];
+    
+    self.shadedSearchViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.shadedSearchViewButton.frame = self.tableView.frame;
+    self.shadedSearchViewButton.backgroundColor = [UIColor blackColor];
+    self.shadedSearchViewButton.alpha = 0.5;
+    [self.shadedSearchViewButton addTarget:self action:@selector(leaveSearchEditingMode) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -107,6 +123,20 @@
     self.navigationItem.rightBarButtonItem = cancelAddTopicButton;
 }
 
+- (NSArray*)filteredTopics {
+    
+    if (!filterText || [filterText length] == 0)
+        return dataSourceBlock();
+    
+    NSMutableArray *filteredTopics = [NSMutableArray new];
+    for (Topic *topic in dataSourceBlock()) {
+        if ([[topic.name lowercaseString] rangeOfString:[self.filterText lowercaseString]].location != NSNotFound) {
+            [filteredTopics addObject:topic];
+        }
+    }
+    return filteredTopics;
+}
+
 #pragma mark Delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -120,14 +150,14 @@
         return newCell;
     } else {
         TopicTableViewCell *newCell = [[TopicTableViewCell alloc] init];
-        Topic *topic = [dataSourceBlock() objectAtIndex:(indexPath.row-self.addingTopic)];
+        Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
         newCell.textLabel.text = topic.name;
         return newCell;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [dataSourceBlock() count]+self.addingTopic;
+    return [[self filteredTopics] count]+self.addingTopic;
 }
 
 #pragma mark UITextField delegate methods
@@ -146,4 +176,26 @@
     }
     return NO;
 }
+
+#pragma mark UISearchBar delegate methods
+- (void)leaveSearchEditingMode {
+    [self.shadedSearchViewButton removeFromSuperview];
+    [self.navigationItem.titleView endEditing:YES];
+    [self addAddButton];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    self.filterText = searchText;
+    [self.tableView reloadData];
+}
+
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.navigationItem.rightBarButtonItem = nil;
+    [self.tableView addSubview:self.shadedSearchViewButton];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self leaveSearchEditingMode];
+}
+
 @end
