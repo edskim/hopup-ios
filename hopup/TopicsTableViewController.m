@@ -1,34 +1,42 @@
 //
-//  AllTopicsViewController.m
+//  TopicsTableViewController.m
 //  hopup
 //
-//  Created by Edward Kim on 8/28/12.
+//  Created by Edward Kim on 9/7/12.
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
-#import "AllTopicsViewController.h"
 #import "MBProgressHUD.h"
 #import "NewTopicCell.h"
 #import "Topic.h"
 #import "TopicsStore.h"
+#import "TopicsTableViewController.h"
 #import "TopicTableViewCell.h"
 
-@interface AllTopicsViewController () <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
+@interface TopicsTableViewController () <UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
 @property (strong) UITableView *tableView;
 @property (strong) NSMutableArray *topics;
 @property __block BOOL addingTopic;
 @end
 
-@implementation AllTopicsViewController
+@implementation TopicsTableViewController
 @synthesize tableView;
 @synthesize details;
+@synthesize backButtonText;
+@synthesize dataSourceBlock;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.title = @"All Topics";
-        self.details = @"See all topics available";
+    }
+    return self;
+}
+
+- (id)initWithTitle:(NSString *)title {
+    self = [super init];
+    if (self) {
+        self.title = title;
     }
     return self;
 }
@@ -41,12 +49,12 @@
     self.tableView.dataSource = self;
     [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
     
-
-    [self addAddButton];
-//    UISearchBar *testSearch = [[UISearchBar alloc] initWithFrame:self.navigationController.toolbar.frame];
-//    self.navigationItem.titleView = testSearch;
     
-    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"All Topics" style:UIBarButtonItemStyleBordered target:nil action:nil]];
+    [self addAddButton];
+    //    UISearchBar *testSearch = [[UISearchBar alloc] initWithFrame:self.navigationController.toolbar.frame];
+    //    self.navigationItem.titleView = testSearch;
+    
+    [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:self.backButtonText style:UIBarButtonItemStyleBordered target:nil action:nil]];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -64,8 +72,6 @@
 {
     [self setTableView:nil];
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -114,16 +120,14 @@
         return newCell;
     } else {
         TopicTableViewCell *newCell = [[TopicTableViewCell alloc] init];
-        TopicsStore *sharedStore = [TopicsStore sharedStore];
-        Topic *topic = [[sharedStore allTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
+        Topic *topic = [dataSourceBlock() objectAtIndex:(indexPath.row-self.addingTopic)];
         newCell.textLabel.text = topic.name;
         return newCell;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    TopicsStore *sharedStore = [TopicsStore sharedStore];
-    return [[sharedStore allTopics] count]+self.addingTopic;
+    return [dataSourceBlock() count]+self.addingTopic;
 }
 
 #pragma mark UITextField delegate methods
@@ -142,5 +146,4 @@
     }
     return NO;
 }
-
 @end

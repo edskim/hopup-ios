@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0E8551DC84EC4EA1A5A758DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B882911A45D47A4A9F2E946 /* libPods.a */; };
+		6405B11115FAE9DA008292EA /* NewTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6405B11015FAE9DA008292EA /* NewTopicCell.m */; };
+		6405B11415FAF008008292EA /* TopicsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6405B11315FAF008008292EA /* TopicsTableViewController.m */; };
 		6447941B15EC234C001CEBB0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6447941A15EC234C001CEBB0 /* UIKit.framework */; };
 		6447941D15EC234C001CEBB0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6447941C15EC234C001CEBB0 /* Foundation.framework */; };
 		6447941F15EC234C001CEBB0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6447941E15EC234C001CEBB0 /* CoreGraphics.framework */; };
@@ -34,6 +36,10 @@
 
 /* Begin PBXFileReference section */
 		4EB67BCFB68340BABEE27A81 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		6405B10F15FAE9DA008292EA /* NewTopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTopicCell.h; sourceTree = "<group>"; };
+		6405B11015FAE9DA008292EA /* NewTopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTopicCell.m; sourceTree = "<group>"; };
+		6405B11215FAF007008292EA /* TopicsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicsTableViewController.h; sourceTree = "<group>"; };
+		6405B11315FAF008008292EA /* TopicsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicsTableViewController.m; sourceTree = "<group>"; };
 		6447941615EC234B001CEBB0 /* hopup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = hopup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6447941A15EC234C001CEBB0 /* UIKit.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6447941C15EC234C001CEBB0 /* Foundation.framework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -201,6 +207,8 @@
 				644794C215EC3022001CEBB0 /* SignInViewController.xib */,
 				648229F515ED543E00844696 /* SubscriptionsViewController.h */,
 				648229F615ED543E00844696 /* SubscriptionsViewController.m */,
+				6405B11215FAF007008292EA /* TopicsTableViewController.h */,
+				6405B11315FAF008008292EA /* TopicsTableViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -210,6 +218,8 @@
 			children = (
 				648229FA15ED560400844696 /* MenuTableViewCell.h */,
 				648229FB15ED560400844696 /* MenuTableViewCell.m */,
+				6405B10F15FAE9DA008292EA /* NewTopicCell.h */,
+				6405B11015FAE9DA008292EA /* NewTopicCell.m */,
 				64822A0915ED71E800844696 /* TopicTableViewCell.h */,
 				64822A0A15ED71E800844696 /* TopicTableViewCell.m */,
 			);
@@ -320,6 +330,8 @@
 				649CE57615FA84CB00F38512 /* SessionStore.m in Sources */,
 				649CE57A15FAA38B00F38512 /* SubscriptionsStore.m in Sources */,
 				649CE57D15FAA71C00F38512 /* Subscription.m in Sources */,
+				6405B11115FAE9DA008292EA /* NewTopicCell.m in Sources */,
+				6405B11415FAF008008292EA /* TopicsTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

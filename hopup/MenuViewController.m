@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
-#import "AllTopicsViewController.h"
 #import "MenuViewController.h"
 #import "MenuTableViewCell.h"
-#import "MyTopicsViewController.h"
 #import "SessionStore.h"
 #import "SignInViewController.h"
 #import "SignInViewControllerDelegate.h"
 #import "SubscriptionsViewController.h"
+#import "TopicsStore.h"
+#import "TopicsTableViewController.h"
 #import "User.h"
 
 @interface MenuViewController () <SignInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -27,8 +27,23 @@
 
 - (void)resetMenuControllers {
     self.menuControllers = [NSMutableArray new];
-    [self.menuControllers addObject:[AllTopicsViewController new]];
-    [self.menuControllers addObject:[MyTopicsViewController new]];
+    
+    TopicsTableViewController *allTopicsViewController = [[TopicsTableViewController alloc] initWithTitle:@"All Topics"];
+    allTopicsViewController.backButtonText = @"All Topics";
+    allTopicsViewController.details = @"See all topics from all users.";
+    allTopicsViewController.dataSourceBlock = ^NSArray*(void){
+        return [[TopicsStore sharedStore] allTopics];
+    };
+    [self.menuControllers addObject:allTopicsViewController];
+    
+    TopicsTableViewController *myTopicsViewController = [[TopicsTableViewController alloc] initWithTitle:@"My Topics"];
+    myTopicsViewController.backButtonText = @"My Topics";
+    myTopicsViewController.details = @"See topics I created.";
+    myTopicsViewController.dataSourceBlock = ^NSArray*(void){
+        return [[TopicsStore sharedStore] topicsWithUserId:[[SessionStore sharedStore] currentUser].userId];
+    };
+    [self.menuControllers addObject:myTopicsViewController];
+    
     [self.menuControllers addObject:[SubscriptionsViewController new]];
 }
 

@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@class User;
 
 @interface AllTopicsViewController : UIViewController
 @property (strong) NSString *details;
