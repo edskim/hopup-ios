@@ -12,13 +12,10 @@
 #import "TopicsStore.h"
 #import "User.h"
 
-@interface SessionStore () {
-    __block User *_currentUser;
-    __block BOOL _signedIn;
-    __block NSArray *_cookies;
-}
-extern NSString* applicationURL;
-@property (strong) __block NSArray *cookies;
+@interface SessionStore ()
+@property (strong) User *currentUser;
+@property BOOL signedIn;
+@property (strong) NSArray *cookies;
 @end
 
 @implementation SessionStore
@@ -26,9 +23,8 @@ extern NSString* applicationURL;
 - (id)init {
     self = [super init];
     if (self) {
-        _currentUser = nil;
-        _signedIn = NO;
-        [RKClient clientWithBaseURLString:applicationURL];
+        self.currentUser = nil;
+        self.signedIn = NO;
     }
     return self;
 }
@@ -60,14 +56,14 @@ extern NSString* applicationURL;
                 request.params = params;
                 
                 request.onDidLoadResponse = ^(RKResponse *response) {
-                    _signedIn = [response isSuccessful];
+                    self.signedIn = [response isSuccessful];
                     if ([response isSuccessful]) {
-                        _currentUser = [User new];
+                        self.currentUser = [User new];
                         self.cookies = [response cookies];
                         
                         id parsedObject = [response parsedBody:nil];
-                        _currentUser.username = [parsedObject objectForKey:@"email"];
-                        _currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
+                        self.currentUser.username = [parsedObject objectForKey:@"email"];
+                        self.currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
                         
                         for (NSHTTPCookie *cookie in self.cookies) {
                             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
@@ -91,8 +87,8 @@ extern NSString* applicationURL;
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
     self.cookies = nil;
-    _currentUser = nil;
-    _signedIn = NO;
+    self.currentUser = nil;
+    self.signedIn = NO;
 }
 
 @end

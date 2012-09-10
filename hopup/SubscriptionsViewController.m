@@ -10,7 +10,7 @@
 #import "SubscriptionsViewController.h"
 #import "Topic.h"
 #import "TopicsStore.h"
-#import "TopicTableViewCell.h"
+#import "TopicCell.h"
 
 @interface SubscriptionsViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong) UITableView *tableView;
@@ -73,7 +73,7 @@
 #pragma mark Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Topic *topic = [[[SubscriptionsStore sharedStore] subscribedTopics] objectAtIndex:indexPath.row];
-    TopicTableViewCell *newCell = [TopicTableViewCell new];
+    TopicCell *newCell = [TopicCell new];
     newCell.textLabel.text = topic.name;
     return newCell;
 }

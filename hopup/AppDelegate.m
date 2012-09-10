@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MenuViewController.h"
+#import "RestKit.h"
 
 NSString *applicationURL;
 
@@ -19,6 +20,7 @@ NSString *applicationURL;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     applicationURL = @"http://ancient-plains-4741.herokuapp.com/";
+    [RKClient clientWithBaseURLString:applicationURL];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.

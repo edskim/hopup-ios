@@ -11,7 +11,7 @@
 #import "Topic.h"
 #import "TopicsStore.h"
 #import "TopicsTableViewController.h"
-#import "TopicTableViewCell.h"
+#import "TopicCell.h"
 
 @interface TopicsTableViewController () <UITableViewDataSource,UITableViewDelegate,
                                         UITextFieldDelegate,UIGestureRecognizerDelegate,
@@ -74,6 +74,13 @@
     [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
         [self.tableView reloadData];
     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if (self.addingTopic) {
+        [self cancelAddTopic];
+    }
+    [self leaveSearchEditingMode];
 }
 
 - (void)viewDidLoad
@@ -167,7 +174,7 @@
         newCell.textField.delegate = self;
         return newCell;
     } else {
-        TopicTableViewCell *newCell = [[TopicTableViewCell alloc] init];
+        TopicCell *newCell = [[TopicCell alloc] init];
         Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
         newCell.textLabel.text = topic.name;
         return newCell;

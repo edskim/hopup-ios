@@ -1,28 +1,21 @@
 //
-//  TopicTableViewCell.m
+//  TagCell.m
 //  hopup
 //
-//  Created by Edward Kim on 8/28/12.
+//  Created by Edward Kim on 9/10/12.
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
-#import "TopicTableViewCell.h"
+#import "TagCell.h"
 
-@implementation TopicTableViewCell
+@implementation TagCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.textLabel.textColor = [UIColor orangeColor];
-        self.detailTextLabel.textColor = [UIColor lightGrayColor];
-        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        // Initialization code
     }
-    return self;
-}
-
-- (id)init {
-    self = [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
     return self;
 }
 

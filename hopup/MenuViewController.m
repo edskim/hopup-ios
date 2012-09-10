@@ -7,7 +7,7 @@
 //
 
 #import "MenuViewController.h"
-#import "MenuTableViewCell.h"
+#import "MenuCell.h"
 #import "SessionStore.h"
 #import "SignInViewController.h"
 #import "SignInViewControllerDelegate.h"
@@ -142,7 +142,7 @@
 #pragma mark UITableView Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    MenuTableViewCell *newCell = [MenuTableViewCell new];
+    MenuCell *newCell = [MenuCell new];
     if (indexPath.row == [self.menuControllers count]) {
         newCell.textLabel.text = @"Sign out";
     } else {

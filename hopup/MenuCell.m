@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
-#import "MenuTableViewCell.h"
+#import "MenuCell.h"
 
-@implementation MenuTableViewCell
+@implementation MenuCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

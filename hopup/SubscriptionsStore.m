@@ -12,14 +12,11 @@
 #import "TopicsStore.h"
 
 @interface SubscriptionsStore ()
-extern NSString *applicationURL;
 @property (strong) NSArray *subscriptions;
 @end
 
-@implementation SubscriptionsStore {
-    NSArray *_subscribedTopics;
-}
-@synthesize subscribedTopics;
+@implementation SubscriptionsStore 
+@synthesize subscribedTopics = _subscribedTopics;
 
 - (id)init {
     self = [super init];
@@ -49,7 +46,6 @@ extern NSString *applicationURL;
 
 - (void)cacheSubscriptionsWithBlock:(void (^)(void))block {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [RKClient clientWithBaseURLString:applicationURL];
         RKClient *client = [RKClient sharedClient];
         [client get:@"subscriptions.json" usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {

@@ -14,7 +14,6 @@
 
 
 @interface TopicsStore ()
-extern NSString *applicationURL;
 @property (strong) NSArray *topics;
 @property (strong) NSDictionary *topicsByUserId;
 @end
@@ -22,13 +21,11 @@ extern NSString *applicationURL;
 @implementation TopicsStore
 @synthesize topics;
 @synthesize topicsByUserId;
-@synthesize topicsByTopicId = _topicsByTopicId;
 
 - (id)init {
     self = [super init];
     if (self) {
         _topicsByTopicId = [NSDictionary new];
-        [RKClient clientWithBaseURLString:applicationURL];
     }
     return self;
 }

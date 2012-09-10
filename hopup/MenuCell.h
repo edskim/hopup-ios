@@ -1,5 +1,5 @@
 //
-//  TopicTableViewCell.h
+//  MenuTableViewCell.h
 //  hopup
 //
 //  Created by Edward Kim on 8/28/12.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TopicTableViewCell : UITableViewCell
+@interface MenuCell : UITableViewCell
 
 @end
