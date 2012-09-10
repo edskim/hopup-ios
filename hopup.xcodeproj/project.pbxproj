@@ -22,14 +22,18 @@
 		644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794CE15EC358D001CEBB0 /* MenuViewController.m */; };
 		644794F615EC5AF5001CEBB0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794F515EC5AF5001CEBB0 /* User.m */; };
 		648229F815ED543E00844696 /* SubscriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229F615ED543E00844696 /* SubscriptionsViewController.m */; };
-		648229FC15ED560400844696 /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229FB15ED560400844696 /* MenuTableViewCell.m */; };
-		64822A0B15ED71E800844696 /* TopicTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0A15ED71E800844696 /* TopicTableViewCell.m */; };
+		648229FC15ED560400844696 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229FB15ED560400844696 /* MenuCell.m */; };
+		64822A0B15ED71E800844696 /* TopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0A15ED71E800844696 /* TopicCell.m */; };
 		64822A0E15ED73CC00844696 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0D15ED73CC00844696 /* MBProgressHUD.m */; };
 		64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A1515ED7CFB00844696 /* TopicsStore.m */; };
 		649CE57615FA84CB00F38512 /* SessionStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57515FA84CB00F38512 /* SessionStore.m */; };
 		649CE57A15FAA38B00F38512 /* SubscriptionsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57915FAA38B00F38512 /* SubscriptionsStore.m */; };
 		649CE57D15FAA71C00F38512 /* Subscription.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57C15FAA71C00F38512 /* Subscription.m */; };
+		649E82B015FC1C9A0077EEF7 /* TagsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 649E82AF15FC1C9A0077EEF7 /* TagsStore.m */; };
 		64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A1C09D15EEEBE100A71B48 /* Topic.m */; };
+		64E06DD915FE69C80076D4BC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E06DD815FE69C80076D4BC /* MapKit.framework */; };
+		64E06DDD15FE72740076D4BC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E06DDC15FE72740076D4BC /* Tag.m */; };
+		64E06DE015FE78C20076D4BC /* TagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E06DDF15FE78C20076D4BC /* TagCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,10 +63,10 @@
 		644794F515EC5AF5001CEBB0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		648229F515ED543E00844696 /* SubscriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionsViewController.h; sourceTree = "<group>"; };
 		648229F615ED543E00844696 /* SubscriptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionsViewController.m; sourceTree = "<group>"; };
-		648229FA15ED560400844696 /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
-		648229FB15ED560400844696 /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
-		64822A0915ED71E800844696 /* TopicTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicTableViewCell.h; sourceTree = "<group>"; };
-		64822A0A15ED71E800844696 /* TopicTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicTableViewCell.m; sourceTree = "<group>"; };
+		648229FA15ED560400844696 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
+		648229FB15ED560400844696 /* MenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuCell.m; sourceTree = "<group>"; };
+		64822A0915ED71E800844696 /* TopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicCell.h; sourceTree = "<group>"; };
+		64822A0A15ED71E800844696 /* TopicCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopicCell.m; sourceTree = "<group>"; };
 		64822A0C15ED73CC00844696 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = MBProgressHUD/MBProgressHUD.h; sourceTree = SOURCE_ROOT; };
 		64822A0D15ED73CC00844696 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = MBProgressHUD/MBProgressHUD.m; sourceTree = SOURCE_ROOT; };
 		64822A1415ED7CFB00844696 /* TopicsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopicsStore.h; sourceTree = "<group>"; };
@@ -73,8 +77,15 @@
 		649CE57915FAA38B00F38512 /* SubscriptionsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionsStore.m; sourceTree = "<group>"; };
 		649CE57B15FAA71C00F38512 /* Subscription.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Subscription.h; sourceTree = "<group>"; };
 		649CE57C15FAA71C00F38512 /* Subscription.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Subscription.m; sourceTree = "<group>"; };
+		649E82AE15FC1C9A0077EEF7 /* TagsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsStore.h; sourceTree = "<group>"; };
+		649E82AF15FC1C9A0077EEF7 /* TagsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsStore.m; sourceTree = "<group>"; };
 		64A1C09C15EEEBE100A71B48 /* Topic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Topic.h; sourceTree = "<group>"; };
 		64A1C09D15EEEBE100A71B48 /* Topic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Topic.m; sourceTree = "<group>"; };
+		64E06DD815FE69C80076D4BC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		64E06DDB15FE72740076D4BC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
+		64E06DDC15FE72740076D4BC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
+		64E06DDE15FE78C20076D4BC /* TagCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagCell.h; sourceTree = "<group>"; };
+		64E06DDF15FE78C20076D4BC /* TagCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagCell.m; sourceTree = "<group>"; };
 		7B882911A45D47A4A9F2E946 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -83,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64E06DD915FE69C80076D4BC /* MapKit.framework in Frameworks */,
 				644794BD15EC2D63001CEBB0 /* QuartzCore.framework in Frameworks */,
 				6447941B15EC234C001CEBB0 /* UIKit.framework in Frameworks */,
 				6447941D15EC234C001CEBB0 /* Foundation.framework in Frameworks */,
@@ -115,6 +127,7 @@
 		6447941915EC234B001CEBB0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				64E06DD815FE69C80076D4BC /* MapKit.framework */,
 				644794BC15EC2D63001CEBB0 /* QuartzCore.framework */,
 				6447941A15EC234C001CEBB0 /* UIKit.framework */,
 				6447941C15EC234C001CEBB0 /* Foundation.framework */,
@@ -135,7 +148,6 @@
 				649CE57215FA80F800F38512 /* View Controllers */,
 				6447942915EC234C001CEBB0 /* AppDelegate.h */,
 				6447942A15EC234C001CEBB0 /* AppDelegate.m */,
-				644794D715EC3E62001CEBB0 /* SignInViewControllerDelegate.h */,
 				6447942115EC234C001CEBB0 /* Supporting Files */,
 			);
 			path = hopup;
@@ -155,6 +167,8 @@
 		649CE56E15FA807000F38512 /* Data Store */ = {
 			isa = PBXGroup;
 			children = (
+				649E82AE15FC1C9A0077EEF7 /* TagsStore.h */,
+				649E82AF15FC1C9A0077EEF7 /* TagsStore.m */,
 				64822A1415ED7CFB00844696 /* TopicsStore.h */,
 				64822A1515ED7CFB00844696 /* TopicsStore.m */,
 				649CE57415FA84CB00F38512 /* SessionStore.h */,
@@ -170,6 +184,8 @@
 			children = (
 				649CE57B15FAA71C00F38512 /* Subscription.h */,
 				649CE57C15FAA71C00F38512 /* Subscription.m */,
+				64E06DDB15FE72740076D4BC /* Tag.h */,
+				64E06DDC15FE72740076D4BC /* Tag.m */,
 				64A1C09C15EEEBE100A71B48 /* Topic.h */,
 				64A1C09D15EEEBE100A71B48 /* Topic.m */,
 				644794F415EC5AF5001CEBB0 /* User.h */,
@@ -206,12 +222,14 @@
 		649CE57315FA812700F38512 /* View Cells */ = {
 			isa = PBXGroup;
 			children = (
-				648229FA15ED560400844696 /* MenuTableViewCell.h */,
-				648229FB15ED560400844696 /* MenuTableViewCell.m */,
+				648229FA15ED560400844696 /* MenuCell.h */,
+				648229FB15ED560400844696 /* MenuCell.m */,
 				6405B10F15FAE9DA008292EA /* NewTopicCell.h */,
 				6405B11015FAE9DA008292EA /* NewTopicCell.m */,
-				64822A0915ED71E800844696 /* TopicTableViewCell.h */,
-				64822A0A15ED71E800844696 /* TopicTableViewCell.m */,
+				64E06DDE15FE78C20076D4BC /* TagCell.h */,
+				64E06DDF15FE78C20076D4BC /* TagCell.m */,
+				64822A0915ED71E800844696 /* TopicCell.h */,
+				64822A0A15ED71E800844696 /* TopicCell.m */,
 			);
 			name = "View Cells";
 			sourceTree = "<group>";
@@ -219,6 +237,7 @@
 		649CE57715FAA04D00F38512 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				644794D715EC3E62001CEBB0 /* SignInViewControllerDelegate.h */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -310,8 +329,8 @@
 				644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */,
 				644794F615EC5AF5001CEBB0 /* User.m in Sources */,
 				648229F815ED543E00844696 /* SubscriptionsViewController.m in Sources */,
-				648229FC15ED560400844696 /* MenuTableViewCell.m in Sources */,
-				64822A0B15ED71E800844696 /* TopicTableViewCell.m in Sources */,
+				648229FC15ED560400844696 /* MenuCell.m in Sources */,
+				64822A0B15ED71E800844696 /* TopicCell.m in Sources */,
 				64822A0E15ED73CC00844696 /* MBProgressHUD.m in Sources */,
 				64822A1615ED7CFB00844696 /* TopicsStore.m in Sources */,
 				64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */,
@@ -320,6 +339,9 @@
 				649CE57D15FAA71C00F38512 /* Subscription.m in Sources */,
 				6405B11115FAE9DA008292EA /* NewTopicCell.m in Sources */,
 				6405B11415FAF008008292EA /* TopicsTableViewController.m in Sources */,
+				649E82B015FC1C9A0077EEF7 /* TagsStore.m in Sources */,
+				64E06DDD15FE72740076D4BC /* Tag.m in Sources */,
+				64E06DE015FE78C20076D4BC /* TagCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
