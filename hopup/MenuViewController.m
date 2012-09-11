@@ -13,7 +13,7 @@
 #import "SignInViewControllerDelegate.h"
 #import "SubscriptionsViewController.h"
 #import "TopicsStore.h"
-#import "TopicsTableViewController.h"
+#import "TopicsViewController.h"
 #import "User.h"
 
 @interface MenuViewController () <SignInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -28,7 +28,7 @@
 - (void)resetMenuControllers {
     self.menuControllers = [NSMutableArray new];
     
-    TopicsTableViewController *allTopicsViewController = [[TopicsTableViewController alloc] initWithTitle:@"All Topics"];
+    TopicsViewController *allTopicsViewController = [[TopicsViewController alloc] initWithTitle:@"All Topics"];
     allTopicsViewController.backButtonText = @"All Topics";
     allTopicsViewController.details = @"See all topics from all users.";
     allTopicsViewController.dataSourceBlock = ^NSArray*(void){
@@ -36,7 +36,7 @@
     };
     [self.menuControllers addObject:allTopicsViewController];
     
-    TopicsTableViewController *myTopicsViewController = [[TopicsTableViewController alloc] initWithTitle:@"My Topics"];
+    TopicsViewController *myTopicsViewController = [[TopicsViewController alloc] initWithTitle:@"My Topics"];
     myTopicsViewController.backButtonText = @"My Topics";
     myTopicsViewController.details = @"See topics I created.";
     myTopicsViewController.dataSourceBlock = ^NSArray*(void){

@@ -11,9 +11,11 @@
 
 @interface TagsStore : NSObject
 + (TagsStore*)sharedStore;
-@property (strong,readonly) NSDictionary *tagsByTopicId;
 - (void)createTagWithTag:(Tag*)tag;
 - (void)createTagWithTag:(Tag*)tag withBlock:(void(^)(void))block;
 - (void)cacheTags;
 - (void)cacheTagsWithBlock:(void(^)(void))block;
+- (void)cacheTagsForTopicId:(int)topicId;
+- (void)cacheTagsForTopicId:(int)topicId withBlock:(void(^)(void))block;
+- (NSArray*)tagsForTopicId:(int)topicId;
 @end

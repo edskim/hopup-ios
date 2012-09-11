@@ -8,12 +8,13 @@
 
 #import "MBProgressHUD.h"
 #import "NewTopicCell.h"
+#import "TagsViewController.h"
 #import "Topic.h"
 #import "TopicsStore.h"
-#import "TopicsTableViewController.h"
+#import "TopicsViewController.h"
 #import "TopicCell.h"
 
-@interface TopicsTableViewController () <UITableViewDataSource,UITableViewDelegate,
+@interface TopicsViewController () <UITableViewDataSource,UITableViewDelegate,
                                         UITextFieldDelegate,UIGestureRecognizerDelegate,
                                         UISearchBarDelegate>
 @property (strong) UITableView *tableView;
@@ -25,7 +26,7 @@
 @property __block BOOL addingTopic;
 @end
 
-@implementation TopicsTableViewController
+@implementation TopicsViewController
 @synthesize tableView;
 @synthesize details;
 @synthesize backButtonText;
@@ -164,7 +165,10 @@
 
 #pragma mark Delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
+    TagsViewController *tagsVC = [[TagsViewController alloc] init];
+    tagsVC.topicId = topic.topicId;
+    [self.navigationController pushViewController:tagsVC animated:YES];
 }
 
 #pragma mark Data Source methods

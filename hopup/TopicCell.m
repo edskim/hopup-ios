@@ -22,7 +22,7 @@
 }
 
 - (id)init {
-    self = [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:nil];
+    self = [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"TopicCell"];
     return self;
 }
 

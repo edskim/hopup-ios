@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TopicsTableViewController : UITableViewController
+@interface TopicsViewController : UIViewController
 @property (strong) NSString *backButtonText;
 @property (strong) NSString *details;
 @property (strong) NSArray* (^dataSourceBlock)(void);

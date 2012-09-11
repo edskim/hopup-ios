@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Topic.h"
 
 @interface TopicsStore : NSObject
 @property (strong,readonly) NSDictionary *topicsByTopicId;

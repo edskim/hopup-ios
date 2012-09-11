@@ -14,9 +14,15 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
+        self.textLabel.textColor = [UIColor orangeColor];
+        self.detailTextLabel.textColor = [UIColor lightGrayColor];
+        self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     return self;
+}
+
+- (id)init {
+    return [self initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"TagCell"];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

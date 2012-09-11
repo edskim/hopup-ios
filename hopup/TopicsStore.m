@@ -8,7 +8,6 @@
 
 #import "RestKit.h"
 #import "SessionStore.h"
-#import "Topic.h"
 #import "TopicsStore.h"
 #import "User.h"
 

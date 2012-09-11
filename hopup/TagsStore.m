@@ -12,14 +12,16 @@
 #import "User.h"
 
 @interface TagsStore ()
+@property (strong) NSMutableDictionary *tagsByTopicId;
 @end
 
 @implementation TagsStore
-
+@synthesize tagsByTopicId;
 
 - (id)init {
     self = [super init];
     if (self) {
+        self.tagsByTopicId = [NSMutableDictionary new];
     }
     return self;
 }
@@ -58,10 +60,12 @@
     });
 }
 
+//caches tags for topics created by user
 - (void)cacheTags {
     [self cacheTagsWithBlock:^{}];
 }
 
+//caches tags for topics created by user
 - (void)cacheTagsWithBlock:(void(^)(void))block {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         RKClient *client = [RKClient sharedClient];
@@ -72,6 +76,34 @@
             };
         }];
     });
+}
+
+- (void)cacheTagsForTopicId:(int)topicId {
+    [self cacheTagsForTopicId:topicId withBlock:^{}];
+}
+
+- (void)cacheTagsForTopicId:(int)topicId withBlock:(void(^)(void))block {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        RKClient *client = [RKClient sharedClient];
+        NSDictionary *queryParams = [NSDictionary dictionaryWithObject:@(topicId) forKey:@"topic_id"];
+        NSString *resourcePath = [[[client baseURL] URLByAppendingResourcePath:@"tags.json" queryParameters:queryParams] absoluteString];
+        [client get:resourcePath usingBlock:^(RKRequest *request) {
+            request.onDidLoadResponse = ^(RKResponse *response) {
+                [self parseRKResponse:response];
+                dispatch_async(dispatch_get_main_queue(), block);
+            };
+        }];
+    });
+}
+
+- (NSArray*)tagsForTopicId:(int)topicId {
+    //if no tags for topic, set empty array and attempt to cache
+    //lazy loading
+    if (![self.tagsByTopicId objectForKey:@(topicId)]) {
+        [self.tagsByTopicId setObject:[NSArray new] forKey:@(topicId)];
+        [self cacheTagsForTopicId:topicId];
+    }
+    return [self.tagsByTopicId objectForKey:@(topicId)];
 }
 
 #pragma mark Helper Methods
@@ -94,7 +126,10 @@
         [[tempTagsByTopicId objectForKey:@(newTag.topicId)] addObject:newTag];
     }
     
-    _tagsByTopicId = tempTagsByTopicId;
+    //replace tags for keys in tagsByTopicId dictionary
+    for (NSNumber *key in tempTagsByTopicId.allKeys) {
+        [self.tagsByTopicId setObject:[tempTagsByTopicId objectForKey:key] forKey:key];
+    }
 }
 
 @end
