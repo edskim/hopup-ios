@@ -21,6 +21,7 @@
 		644794C415EC3022001CEBB0 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 644794C215EC3022001CEBB0 /* SignInViewController.xib */; };
 		644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794CE15EC358D001CEBB0 /* MenuViewController.m */; };
 		644794F615EC5AF5001CEBB0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794F515EC5AF5001CEBB0 /* User.m */; };
+		6480665C15FFBABF000CC223 /* UsersStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6480665B15FFBABF000CC223 /* UsersStore.m */; };
 		648229F815ED543E00844696 /* SubscriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229F615ED543E00844696 /* SubscriptionsViewController.m */; };
 		648229FC15ED560400844696 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229FB15ED560400844696 /* MenuCell.m */; };
 		64822A0B15ED71E800844696 /* TopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0A15ED71E800844696 /* TopicCell.m */; };
@@ -80,6 +81,8 @@
 		644794D715EC3E62001CEBB0 /* SignInViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInViewControllerDelegate.h; sourceTree = "<group>"; };
 		644794F415EC5AF5001CEBB0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		644794F515EC5AF5001CEBB0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		6480665A15FFBABF000CC223 /* UsersStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsersStore.h; sourceTree = "<group>"; };
+		6480665B15FFBABF000CC223 /* UsersStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersStore.m; sourceTree = "<group>"; };
 		648229F515ED543E00844696 /* SubscriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionsViewController.h; sourceTree = "<group>"; };
 		648229F615ED543E00844696 /* SubscriptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionsViewController.m; sourceTree = "<group>"; };
 		648229FA15ED560400844696 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
@@ -215,6 +218,8 @@
 				649CE57515FA84CB00F38512 /* SessionStore.m */,
 				649CE57815FAA38B00F38512 /* SubscriptionsStore.h */,
 				649CE57915FAA38B00F38512 /* SubscriptionsStore.m */,
+				6480665A15FFBABF000CC223 /* UsersStore.h */,
+				6480665B15FFBABF000CC223 /* UsersStore.m */,
 			);
 			name = "Data Store";
 			sourceTree = "<group>";
@@ -428,6 +433,7 @@
 				64E06DDD15FE72740076D4BC /* Tag.m in Sources */,
 				64E06DE015FE78C20076D4BC /* TagCell.m in Sources */,
 				64E06DEA15FE9C960076D4BC /* TagsViewController.m in Sources */,
+				6480665C15FFBABF000CC223 /* UsersStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

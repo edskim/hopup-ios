@@ -10,5 +10,6 @@
 
 @interface User : NSObject
 @property (strong) NSString *username;
+@property (strong) NSString *email;
 @property int userId;
 @end

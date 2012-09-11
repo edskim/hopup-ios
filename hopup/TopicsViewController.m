@@ -13,6 +13,7 @@
 #import "TopicsStore.h"
 #import "TopicsViewController.h"
 #import "TopicCell.h"
+#import "UsersStore.h"
 
 @interface TopicsViewController () <UITableViewDataSource,UITableViewDelegate,
                                         UITextFieldDelegate,UIGestureRecognizerDelegate,
@@ -74,6 +75,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
+        [self.tableView reloadData];
+    }];
+    
+    [[UsersStore sharedStore] cacheUsersWithBlock:^{
         [self.tableView reloadData];
     }];
     
@@ -187,6 +192,7 @@
         TopicCell *newCell = [[TopicCell alloc] init];
         Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
         newCell.textLabel.text = topic.name;
+        newCell.detailTextLabel.text = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];
         return newCell;
     }
 }

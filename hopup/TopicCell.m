@@ -25,7 +25,7 @@
 }
 
 - (id)init {
-    self = [self initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"TopicCell"];
+    self = [self initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"TopicCell"];
     return self;
 }
 

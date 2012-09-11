@@ -62,7 +62,8 @@
                         self.cookies = [response cookies];
                         
                         id parsedObject = [response parsedBody:nil];
-                        self.currentUser.username = [parsedObject objectForKey:@"email"];
+                        self.currentUser.username = [parsedObject objectForKey:@"name"];
+                        self.currentUser.email = [parsedObject objectForKey:@"email"];
                         self.currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
                         
                         for (NSHTTPCookie *cookie in self.cookies) {
