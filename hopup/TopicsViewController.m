@@ -75,6 +75,11 @@
     [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
         [self.tableView reloadData];
     }];
+    
+    //Show user what selection they were viewing
+    NSIndexPath *selection = [self.tableView indexPathForSelectedRow];
+	if (selection)
+		[self.tableView deselectRowAtIndexPath:selection animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -165,7 +170,7 @@
 
 #pragma mark Delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
+    Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row)];
     TagsViewController *tagsVC = [[TagsViewController alloc] init];
     tagsVC.topicId = topic.topicId;
     [self.navigationController pushViewController:tagsVC animated:YES];

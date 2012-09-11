@@ -8,6 +8,7 @@
 
 #import "SubscriptionsStore.h"
 #import "SubscriptionsViewController.h"
+#import "TagsViewController.h"
 #import "Topic.h"
 #import "TopicsStore.h"
 #import "TopicCell.h"
@@ -67,7 +68,10 @@
 
 #pragma mark Delegate methods
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    Topic *topic = [[[SubscriptionsStore sharedStore] subscribedTopics] objectAtIndex:(indexPath.row)];
+    TagsViewController *tagsVC = [[TagsViewController alloc] init];
+    tagsVC.topicId = topic.topicId;
+    [self.navigationController pushViewController:tagsVC animated:YES];
 }
 
 #pragma mark Data Source methods
