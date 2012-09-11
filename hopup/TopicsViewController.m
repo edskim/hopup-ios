@@ -56,7 +56,8 @@
     self.view = self.tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
+    [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //setup toolbar
     [self addAddButton];

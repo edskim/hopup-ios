@@ -14,9 +14,12 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.textLabel.textColor = [UIColor orangeColor];
-        self.detailTextLabel.textColor = [UIColor lightGrayColor];
+        self.textLabel.textColor = [UIColor brownColor];
+        self.textLabel.backgroundColor = [UIColor clearColor];
+        self.detailTextLabel.textColor = [UIColor brownColor];
+        self.detailTextLabel.backgroundColor = [UIColor clearColor];
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        self.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"BackgroundCell.png"]];
     }
     return self;
 }

@@ -63,7 +63,8 @@
     self.view = self.tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    [self.tableView setBackgroundColor:[UIColor darkGrayColor]];
+    [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]]];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:nil action:nil]];
 }
