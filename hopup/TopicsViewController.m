@@ -74,12 +74,14 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
         [self.tableView reloadData];
     }];
     
     [[UsersStore sharedStore] cacheUsersWithBlock:^{
         [self.tableView reloadData];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
     
     //Show user what selection they were viewing
@@ -119,7 +121,7 @@
     [self.tableView scrollToRowAtIndexPath:insertPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     [self.tableView addSubview:self.shadedNewTopicButton];
     [self addCancelButton];
-    [self.searchBar setUserInteractionEnabled:NO];
+    [self.searchBar setHidden:YES];
 }
 
 - (void)cancelAddTopic {
@@ -129,7 +131,7 @@
     self.addingTopic = NO;
     NSIndexPath *newTopicIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newTopicIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-    [self.searchBar setUserInteractionEnabled:YES];
+    [self.searchBar setHidden:NO];
 }
 
 - (void)addAddButton {
@@ -150,7 +152,9 @@
     
     NSMutableArray *filteredTopics = [NSMutableArray new];
     for (Topic *topic in dataSourceBlock()) {
-        if ([[topic.name lowercaseString] rangeOfString:[self.filterText lowercaseString]].location != NSNotFound) {
+        NSString *username = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];
+        if ([[topic.name lowercaseString] rangeOfString:[self.filterText lowercaseString]].location != NSNotFound ||
+            [[username lowercaseString] rangeOfString:[self.filterText lowercaseString]].location != NSNotFound) {
             [filteredTopics addObject:topic];
         }
     }

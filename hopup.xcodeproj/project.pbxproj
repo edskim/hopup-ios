@@ -22,6 +22,10 @@
 		644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794CE15EC358D001CEBB0 /* MenuViewController.m */; };
 		644794F615EC5AF5001CEBB0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794F515EC5AF5001CEBB0 /* User.m */; };
 		6480665C15FFBABF000CC223 /* UsersStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6480665B15FFBABF000CC223 /* UsersStore.m */; };
+		6480665F15FFCB7F000CC223 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480665E15FFCB7E000CC223 /* thumbnail.png */; };
+		6480666115FFCB82000CC223 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480666015FFCB82000CC223 /* thumbnail@2x.png */; };
+		6480666815FFF9D3000CC223 /* AvatarPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480666615FFF9CF000CC223 /* AvatarPlaceholder.png */; };
+		6480666915FFF9D3000CC223 /* AvatarPlaceholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480666715FFF9D1000CC223 /* AvatarPlaceholder@2x.png */; };
 		648229F815ED543E00844696 /* SubscriptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229F615ED543E00844696 /* SubscriptionsViewController.m */; };
 		648229FC15ED560400844696 /* MenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 648229FB15ED560400844696 /* MenuCell.m */; };
 		64822A0B15ED71E800844696 /* TopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64822A0A15ED71E800844696 /* TopicCell.m */; };
@@ -83,6 +87,10 @@
 		644794F515EC5AF5001CEBB0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		6480665A15FFBABF000CC223 /* UsersStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsersStore.h; sourceTree = "<group>"; };
 		6480665B15FFBABF000CC223 /* UsersStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersStore.m; sourceTree = "<group>"; };
+		6480665E15FFCB7E000CC223 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		6480666015FFCB82000CC223 /* thumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "thumbnail@2x.png"; sourceTree = "<group>"; };
+		6480666615FFF9CF000CC223 /* AvatarPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AvatarPlaceholder.png; sourceTree = "<group>"; };
+		6480666715FFF9D1000CC223 /* AvatarPlaceholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "AvatarPlaceholder@2x.png"; sourceTree = "<group>"; };
 		648229F515ED543E00844696 /* SubscriptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscriptionsViewController.h; sourceTree = "<group>"; };
 		648229F615ED543E00844696 /* SubscriptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscriptionsViewController.m; sourceTree = "<group>"; };
 		648229FA15ED560400844696 /* MenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuCell.h; sourceTree = "<group>"; };
@@ -151,6 +159,8 @@
 		6447940B15EC234B001CEBB0 = {
 			isa = PBXGroup;
 			children = (
+				6480666015FFCB82000CC223 /* thumbnail@2x.png */,
+				6480665E15FFCB7E000CC223 /* thumbnail.png */,
 				6447942015EC234C001CEBB0 /* hopup */,
 				6447941915EC234B001CEBB0 /* Frameworks */,
 				6447941715EC234B001CEBB0 /* Products */,
@@ -292,6 +302,8 @@
 		64E06DF015FF17CD0076D4BC /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6480666615FFF9CF000CC223 /* AvatarPlaceholder.png */,
+				6480666715FFF9D1000CC223 /* AvatarPlaceholder@2x.png */,
 				64E06E0515FF28B80076D4BC /* Background.png */,
 				64E06E0615FF28B80076D4BC /* Background@2x.png */,
 				64E06E0115FF220A0076D4BC /* BackgroundCell.png */,
@@ -386,6 +398,10 @@
 				64E06E1615FF2B070076D4BC /* ButtonNavigationBar@2x.png in Resources */,
 				64E06E1715FF2B070076D4BC /* ButtonNavigationBarSelected.png in Resources */,
 				64E06E1815FF2B070076D4BC /* ButtonNavigationBarSelected@2x.png in Resources */,
+				6480665F15FFCB7F000CC223 /* thumbnail.png in Resources */,
+				6480666115FFCB82000CC223 /* thumbnail@2x.png in Resources */,
+				6480666815FFF9D3000CC223 /* AvatarPlaceholder.png in Resources */,
+				6480666915FFF9D3000CC223 /* AvatarPlaceholder@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

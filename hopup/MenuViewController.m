@@ -66,6 +66,14 @@
     [self.tableView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"Background.png"]]];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    UIButton *profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    profileButton.frame = CGRectMake(0.0, 0.0, 25, 25);
+    [profileButton setBackgroundImage:[UIImage imageNamed:@"AvatarPlaceholder.png"] forState:UIControlStateNormal];
+    [profileButton addTarget:self action:@selector(showProfile) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *profileBarButton = [[UIBarButtonItem alloc] initWithCustomView:profileButton];
+    self.navigationItem.rightBarButtonItem = profileBarButton;
+    
     [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Menu" style:UIBarButtonItemStyleBordered target:nil action:nil]];
 }
 
@@ -116,6 +124,10 @@
     signinController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     signinController.delegate = self;
     [self presentViewController:signinController animated:YES completion:NULL];
+}
+
+- (void)showProfile {
+    
 }
 
 #pragma mark SignInViewController delegate methods

@@ -41,10 +41,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [[TagsStore sharedStore] cacheTagsForTopicId:self.topicId withBlock:^{
         [self.tableView reloadData];
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
