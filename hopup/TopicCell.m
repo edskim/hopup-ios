@@ -16,6 +16,7 @@
     if (self) {
         self.textLabel.textColor = [UIColor brownColor];
         self.textLabel.backgroundColor = [UIColor clearColor];
+        self.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:21.0];
         self.detailTextLabel.textColor = [UIColor brownColor];
         self.detailTextLabel.backgroundColor = [UIColor clearColor];
         self.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

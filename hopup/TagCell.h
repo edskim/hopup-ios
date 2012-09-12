@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Tag;
 
 @interface TagCell : UITableViewCell
-
+@property (strong) Tag *cellTag;
 @end

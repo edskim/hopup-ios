@@ -12,6 +12,7 @@
 #import "Topic.h"
 #import "TopicsStore.h"
 #import "TopicCell.h"
+#import "UsersStore.h"
 
 @interface SubscriptionsViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (strong) UITableView *tableView;
@@ -34,8 +35,13 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [[SubscriptionsStore sharedStore] cacheSubscriptionsWithBlock:^{
         [self.tableView reloadData];
+    }];
+    [[UsersStore sharedStore] cacheUsersWithBlock:^{
+        [self.tableView reloadData];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
 }
 
@@ -78,8 +84,12 @@
 #pragma mark Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     Topic *topic = [[[SubscriptionsStore sharedStore] subscribedTopics] objectAtIndex:indexPath.row];
-    TopicCell *newCell = [TopicCell new];
+    TopicCell *newCell = (TopicCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopicCell"];
+    if (newCell == nil) {
+        newCell = [TopicCell new];
+    }
     newCell.textLabel.text = topic.name;
+    newCell.detailTextLabel.text = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];
     return newCell;
 }
 

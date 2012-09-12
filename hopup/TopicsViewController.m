@@ -193,7 +193,10 @@
         newCell.textField.delegate = self;
         return newCell;
     } else {
-        TopicCell *newCell = [[TopicCell alloc] init];
+        TopicCell *newCell = (TopicCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TopicCell"];
+        if (newCell == nil) {
+            newCell = [TopicCell new];
+        }
         Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
         newCell.textLabel.text = topic.name;
         newCell.detailTextLabel.text = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];

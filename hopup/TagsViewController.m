@@ -68,12 +68,20 @@
     
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 100;
+}
+
 #pragma mark Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    TagCell *tagCell = (TagCell *)[self.tableView dequeueReusableCellWithIdentifier:@"TagCell"];
+    if (tagCell == nil) {
+        tagCell = [TagCell new];
+    }
+    
     Tag *tag = [[[TagsStore sharedStore] tagsForTopicId:self.topicId] objectAtIndex:indexPath.row];
-    TagCell *tagCell = [TagCell new];
-    tagCell.textLabel.text = tag.text;
-    tagCell.detailTextLabel.text = tag.location;
+    tagCell.cellTag = tag;
     return tagCell;
 }
 
