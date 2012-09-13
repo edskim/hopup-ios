@@ -88,8 +88,7 @@
     if (newCell == nil) {
         newCell = [TopicCell new];
     }
-    newCell.textLabel.text = topic.name;
-    newCell.detailTextLabel.text = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];
+    newCell.topic = topic;
     return newCell;
 }
 

@@ -9,5 +9,5 @@
 #import "Subscription.h"
 
 @implementation Subscription
-@synthesize topicId, userId;
+@synthesize topicId, userId, subscriptionId;
 @end

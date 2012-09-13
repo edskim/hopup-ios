@@ -95,7 +95,6 @@
     
     MKPointAnnotation *point = [MKPointAnnotation new];
     point.coordinate = coord;
-    point.title = self.cellTag.text;
     [self.mapView addAnnotation:point];
     
 }

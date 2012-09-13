@@ -10,7 +10,6 @@
 #import "SessionStore.h"
 #import "SubscriptionsStore.h"
 #import "TopicsStore.h"
-#import "User.h"
 
 @interface SessionStore ()
 @property (strong) User *currentUser;

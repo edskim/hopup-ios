@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface Subscription : NSObject
+@property int subscriptionId;
 @property int topicId;
 @property int userId;
 @end

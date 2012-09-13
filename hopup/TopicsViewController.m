@@ -8,6 +8,7 @@
 
 #import "MBProgressHUD.h"
 #import "NewTopicCell.h"
+#import "SubscriptionsStore.h"
 #import "TagsViewController.h"
 #import "Topic.h"
 #import "TopicsStore.h"
@@ -198,8 +199,7 @@
             newCell = [TopicCell new];
         }
         Topic *topic = [[self filteredTopics] objectAtIndex:(indexPath.row-self.addingTopic)];
-        newCell.textLabel.text = topic.name;
-        newCell.detailTextLabel.text = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];
+        newCell.topic = topic;
         return newCell;
     }
 }

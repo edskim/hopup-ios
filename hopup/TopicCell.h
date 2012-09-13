@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+@class Topic;
 
 @interface TopicCell : UITableViewCell
-
+@property (strong, nonatomic) Topic *topic;
 @end

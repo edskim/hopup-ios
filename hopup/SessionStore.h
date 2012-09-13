@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@class User;
+#import "User.h"
 
 @interface SessionStore : NSObject
 @property (strong,readonly) User *currentUser;

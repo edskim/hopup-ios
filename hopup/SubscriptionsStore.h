@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface SubscriptionsStore : NSObject
-@property (strong, readonly) NSArray *subscribedTopics;
+@property (strong, readonly) NSMutableArray *subscribedTopics;
 + (SubscriptionsStore*)sharedStore;
 - (void)cacheSubscriptions;
 - (void)cacheSubscriptionsWithBlock:(void(^)(void))block;
 - (void)subscribeToTopic:(int)topicId withBlock:(void(^)(BOOL successful))block;
 - (void)unsubscribeToTopic:(int)topicId withBlock:(void(^)(BOOL successful))block;
+- (BOOL)isSubscribedToTopicWithId:(int)topicId;
 @end
