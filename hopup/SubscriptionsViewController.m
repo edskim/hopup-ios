@@ -43,6 +43,11 @@
         [self.tableView reloadData];
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     }];
+    
+    //Show user what selection they were viewing
+    NSIndexPath *selection = [self.tableView indexPathForSelectedRow];
+	if (selection)
+		[self.tableView deselectRowAtIndexPath:selection animated:YES];
 }
 
 - (void)loadView {
@@ -89,6 +94,13 @@
         newCell = [TopicCell new];
     }
     newCell.topic = topic;
+    
+    __weak SubscriptionsViewController* weakSelf = self;
+    
+    newCell.onDidUnSubscribe = ^{
+        [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+    };
+    
     return newCell;
 }
 

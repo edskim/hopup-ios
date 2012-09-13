@@ -11,4 +11,5 @@
 
 @interface TopicCell : UITableViewCell
 @property (strong, nonatomic) Topic *topic;
+@property (strong) void (^onDidUnSubscribe)(void);
 @end

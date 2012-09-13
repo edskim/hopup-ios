@@ -41,6 +41,8 @@
         [self.subscribeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
         [self.subscribeButton addTarget:self action:@selector(subscribeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.subscribeButton];
+        
+        self.onDidUnSubscribe = ^{};
     }
     return self;
 }
@@ -66,7 +68,7 @@
                 self.subscribed = NO;
                 [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
                 [self.subscribeButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-                [(UITableView*)self.superview reloadData];
+                self.onDidUnSubscribe();
             }
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
             [self.subscribeButton setUserInteractionEnabled:YES];

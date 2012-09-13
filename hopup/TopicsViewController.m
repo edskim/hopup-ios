@@ -48,6 +48,9 @@
     self = [super init];
     if (self) {
         self.title = title;
+        self.dataSourceBlock = ^NSArray*(void){
+            return [NSArray new];
+        };
     }
     return self;
 }
@@ -149,10 +152,10 @@
 - (NSArray*)filteredTopics {
     
     if (!filterText || [filterText length] == 0)
-        return dataSourceBlock();
+        return self.dataSourceBlock();
     
     NSMutableArray *filteredTopics = [NSMutableArray new];
-    for (Topic *topic in dataSourceBlock()) {
+    for (Topic *topic in self.dataSourceBlock()) {
         NSString *username = [[[UsersStore sharedStore] userWithId:topic.creatorId] username];
         if ([[topic.name lowercaseString] rangeOfString:[self.filterText lowercaseString]].location != NSNotFound ||
             [[username lowercaseString] rangeOfString:[self.filterText lowercaseString]].location != NSNotFound) {
