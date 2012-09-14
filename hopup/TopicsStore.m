@@ -15,6 +15,7 @@
 @interface TopicsStore ()
 @property (strong) NSMutableArray *topics;
 @property (strong) NSMutableDictionary *topicsByUserId;
+@property (strong) NSMutableDictionary *topicsByTopicIdPrivate;
 @end
 
 @implementation TopicsStore
@@ -24,7 +25,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _topicsByTopicId = [NSMutableDictionary new];
+        self.topicsByTopicIdPrivate = [NSMutableDictionary new];
     }
     return self;
 }
@@ -66,7 +67,7 @@
                     newTopic.creatorId = [[parsedResponse objectForKey:@"creator_id"] integerValue];
                     newTopic.topicId = [[parsedResponse objectForKey:@"id"] integerValue];
                     [weakSelf.topics addObject:newTopic];
-                    [weakSelf.topicsByTopicId setObject:newTopic forKey:@(newTopic.topicId)];
+                    [weakSelf.topicsByTopicIdPrivate setObject:newTopic forKey:@(newTopic.topicId)];
                     if (![weakSelf.topicsByUserId objectForKey:@(userId)])
                         [weakSelf.topicsByUserId setObject:[NSMutableArray new] forKey:@(userId)];
                     [[weakSelf.topicsByUserId objectForKey:@(userId)] addObject:newTopic];
@@ -115,15 +116,19 @@
         [client delete:resourcePath usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {
                 if ([response isSuccessful]) {
-                    Topic* topicToRemove = [self.topicsByTopicId objectForKey:@(topicId)];
+                    Topic* topicToRemove = [weakSelf.topicsByTopicIdPrivate objectForKey:@(topicId)];
                     [weakSelf.topics removeObject:topicToRemove];
                     [[weakSelf.topicsByUserId objectForKey:@(topicToRemove.creatorId)] removeObject:topicToRemove];
-                    [weakSelf.topicsByTopicId removeObjectForKey:@(topicId)];
+                    [weakSelf.topicsByTopicIdPrivate removeObjectForKey:@(topicId)];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
         }];
     });
+}
+
+- (NSDictionary*)topicsByTopicId {
+    return [NSDictionary dictionaryWithDictionary:self.topicsByTopicIdPrivate];
 }
 
 #pragma mark Helper Methods
@@ -151,7 +156,7 @@
     }
     self.topics = tempArr;
     self.topicsByUserId = tempUserIdDic;
-    _topicsByTopicId = tempTopicIdDic;
+    self.topicsByTopicIdPrivate = tempTopicIdDic;
 }
 
 @end

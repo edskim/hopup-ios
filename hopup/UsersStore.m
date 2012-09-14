@@ -40,10 +40,11 @@
 }
 
 - (void)cacheUsersWithBlock:(void(^)(void))block {
+    __weak UsersStore *weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [[RKClient sharedClient] get:@"users.json" usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {
-                [self ParseRKResponse:response];
+                [weakSelf ParseRKResponse:response];
                 dispatch_async(dispatch_get_main_queue(), block);
             };
         }];

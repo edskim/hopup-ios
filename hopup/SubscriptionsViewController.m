@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "MBProgressHUD.h"
+#import "SessionStore.h"
 #import "SubscriptionsStore.h"
 #import "SubscriptionsViewController.h"
 #import "TagsViewController.h"
@@ -104,8 +106,30 @@
     return newCell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray* myTopics = [[TopicsStore sharedStore] topicsWithUserId:[[SessionStore sharedStore] currentUser].userId];
+    return ([myTopics containsObject:[[[SubscriptionsStore sharedStore] subscribedTopics] objectAtIndex:(indexPath.row)]]);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+        TopicCell *cellToDelete = (TopicCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+
+        [[TopicsStore sharedStore] deleteTopicWithTopicId:cellToDelete.topic.topicId withBlock:^(BOOL successful) {
+            if (successful) {
+                [[SubscriptionsStore sharedStore] removeLocalStoreSubscriptionWithTopicId:cellToDelete.topic.topicId];
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            }
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[[SubscriptionsStore sharedStore] subscribedTopics] count];
 }
+
+
 
 @end

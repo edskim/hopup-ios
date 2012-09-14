@@ -44,6 +44,7 @@
 
 - (void)createSessionWithEmail:(NSString *)email withPassword:(NSString *)pw withBlock:(void (^)(BOOL))block {
     if (!self.signedIn) {
+        __weak SessionStore *weakSelf = self;
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             RKClient *client = [RKClient sharedClient];
             NSDictionary *userNamePassword = [NSDictionary dictionaryWithKeysAndObjects:
@@ -55,24 +56,24 @@
                 request.params = params;
                 
                 request.onDidLoadResponse = ^(RKResponse *response) {
-                    self.signedIn = [response isSuccessful];
+                    weakSelf.signedIn = [response isSuccessful];
                     if ([response isSuccessful]) {
-                        self.currentUser = [User new];
-                        self.cookies = [response cookies];
+                        weakSelf.currentUser = [User new];
+                        weakSelf.cookies = [response cookies];
                         
                         id parsedObject = [response parsedBody:nil];
-                        self.currentUser.username = [parsedObject objectForKey:@"name"];
-                        self.currentUser.email = [parsedObject objectForKey:@"email"];
-                        self.currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
+                        weakSelf.currentUser.username = [parsedObject objectForKey:@"name"];
+                        weakSelf.currentUser.email = [parsedObject objectForKey:@"email"];
+                        weakSelf.currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
                         
-                        for (NSHTTPCookie *cookie in self.cookies) {
+                        for (NSHTTPCookie *cookie in weakSelf.cookies) {
                             [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
                         }
                         [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
                             [[SubscriptionsStore sharedStore] cacheSubscriptions];
                         }];
                     }
-                    block(self.signedIn);
+                    block(weakSelf.signedIn);
                 };
                 
             }];
