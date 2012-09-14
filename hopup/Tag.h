@@ -14,4 +14,5 @@
 @property (strong) NSString *text;
 @property (strong) NSString *location;
 @property int topicId;
+@property int tagId;
 @end

@@ -13,8 +13,8 @@
 
 
 @interface TopicsStore ()
-@property (strong) NSArray *topics;
-@property (strong) NSDictionary *topicsByUserId;
+@property (strong) NSMutableArray *topics;
+@property (strong) NSMutableDictionary *topicsByUserId;
 @end
 
 @implementation TopicsStore
@@ -24,7 +24,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        _topicsByTopicId = [NSDictionary new];
+        _topicsByTopicId = [NSMutableDictionary new];
     }
     return self;
 }
@@ -44,10 +44,11 @@
 }
 
 - (void)createTopicWithName:(NSString *)name {
-    [self createTopicWithName:name withBlock:^{}];
+    [self createTopicWithName:name withBlock:^(BOOL successful){}];
 }
 
-- (void)createTopicWithName:(NSString *)name withBlock:(void (^)(void))block {
+- (void)createTopicWithName:(NSString *)name withBlock:(void (^)(BOOL successful))block {
+    __weak TopicsStore *weakSelf = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         RKClient *client = [RKClient sharedClient];
         [client post:@"topics.json" usingBlock:^(RKRequest *request) {
@@ -57,7 +58,20 @@
                                     @"creator_id",@(userId), nil];
             request.params = [NSDictionary dictionaryWithObject:topic forKey:@"topic"];
             request.onDidLoadResponse = ^(RKResponse *response) {
-                dispatch_async(dispatch_get_main_queue(), block);
+                
+                if ([response isSuccessful]) {
+                    id parsedResponse = [response parsedBody:nil];
+                    Topic *newTopic = [Topic new];
+                    newTopic.name = [parsedResponse objectForKey:@"name"];
+                    newTopic.creatorId = [[parsedResponse objectForKey:@"creator_id"] integerValue];
+                    newTopic.topicId = [[parsedResponse objectForKey:@"id"] integerValue];
+                    [weakSelf.topics addObject:newTopic];
+                    [weakSelf.topicsByTopicId setObject:newTopic forKey:@(newTopic.topicId)];
+                    if (![weakSelf.topicsByUserId objectForKey:@(userId)])
+                        [weakSelf.topicsByUserId setObject:[NSMutableArray new] forKey:@(userId)];
+                    [[weakSelf.topicsByUserId objectForKey:@(userId)] addObject:newTopic];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
         }];
     });
@@ -68,11 +82,12 @@
 }
 
 - (void)cacheTopicsWithBlock:(void (^)(void))block {
+    __weak TopicsStore *weakSelf = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         RKClient *client = [RKClient sharedClient];
         [client get:@"topics.json" usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {
-                [self parseRKResponse:response];
+                [weakSelf parseRKResponse:response];
                 dispatch_async(dispatch_get_main_queue(), block);
             };
         }];
@@ -84,7 +99,31 @@
 }
 
 - (NSArray*)topicsWithUserId:(int)userId {
-    return [self.topicsByUserId objectForKey:[NSString stringWithFormat:@"%d",userId]];
+    return [self.topicsByUserId objectForKey:@(userId)];
+}
+
+- (void)deleteTopicWithTopicId:(int)topicId {
+    [self deleteTopicWithTopicId:topicId withBlock:^(BOOL successful){}];
+}
+
+- (void)deleteTopicWithTopicId:(int)topicId withBlock:(void (^)(BOOL successful))block {
+    __weak TopicsStore *weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        RKClient *client = [RKClient sharedClient];
+        NSString *resourcePath = [[[client baseURL] URLByAppendingResourcePath:[NSString stringWithFormat:@"topics/%d.json",topicId]] absoluteString];
+        
+        [client delete:resourcePath usingBlock:^(RKRequest *request) {
+            request.onDidLoadResponse = ^(RKResponse *response) {
+                if ([response isSuccessful]) {
+                    Topic* topicToRemove = [self.topicsByTopicId objectForKey:@(topicId)];
+                    [weakSelf.topics removeObject:topicToRemove];
+                    [[weakSelf.topicsByUserId objectForKey:@(topicToRemove.creatorId)] removeObject:topicToRemove];
+                    [weakSelf.topicsByTopicId removeObjectForKey:@(topicId)];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
+            };
+        }];
+    });
 }
 
 #pragma mark Helper Methods
@@ -102,11 +141,10 @@
         [tempArr addObject:newTopic];
         
         //add topic to dictionary by user id
-        NSString *userId = [NSString stringWithFormat:@"%d",newTopic.creatorId];
-        if (![tempUserIdDic objectForKey:userId]) {
-            [tempUserIdDic setValue:[NSMutableArray new] forKey:userId];
+        if (![tempUserIdDic objectForKey:@(newTopic.creatorId)]) {
+            [tempUserIdDic setObject:[NSMutableArray new] forKey:@(newTopic.creatorId)];
         }
-        [[tempUserIdDic objectForKey:userId] addObject:newTopic];
+        [[tempUserIdDic objectForKey:@(newTopic.creatorId)] addObject:newTopic];
         
         //add topic to dictionary by topic id
         [tempTopicIdDic setObject:newTopic forKey:[NSNumber numberWithInt:newTopic.topicId]];

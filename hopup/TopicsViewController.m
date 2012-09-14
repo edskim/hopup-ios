@@ -8,6 +8,7 @@
 
 #import "MBProgressHUD.h"
 #import "NewTopicCell.h"
+#import "SessionStore.h"
 #import "SubscriptionsStore.h"
 #import "TagsViewController.h"
 #import "Topic.h"
@@ -207,6 +208,27 @@
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray* myTopics = [[TopicsStore sharedStore] topicsWithUserId:[[SessionStore sharedStore] currentUser].userId];
+    if (self.addingTopic) {
+        return NO;
+    }
+    return ([myTopics containsObject:[[self filteredTopics] objectAtIndex:(indexPath.row)]]);
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
+        TopicCell *cellToDelete = (TopicCell*)[self.tableView cellForRowAtIndexPath:indexPath];
+        [[TopicsStore sharedStore] deleteTopicWithTopicId:cellToDelete.topic.topicId withBlock:^(BOOL successful) {
+            if (successful) {
+                [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+            }
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [[self filteredTopics] count]+self.addingTopic;
 }
@@ -217,12 +239,10 @@
     //process new topic here
     if ([textField.text length] > 0) {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [[TopicsStore sharedStore] createTopicWithName:textField.text withBlock:^{
-            [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
-                [self.tableView reloadData];
-                [self cancelAddTopic];
-                [MBProgressHUD hideHUDForView:self.view animated:YES];
-            }];
+        [[TopicsStore sharedStore] createTopicWithName:textField.text withBlock:^(BOOL successful){
+            [self.tableView reloadData];
+            [self cancelAddTopic];
+            [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
     }
     return NO;

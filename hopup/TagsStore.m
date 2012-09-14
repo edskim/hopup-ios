@@ -13,6 +13,7 @@
 
 @interface TagsStore ()
 @property (strong) NSMutableDictionary *tagsByTopicId;
+@property (strong) NSMutableDictionary *tagsByTagId;
 @end
 
 @implementation TagsStore
@@ -22,6 +23,7 @@
     self = [super init];
     if (self) {
         self.tagsByTopicId = [NSMutableDictionary new];
+        self.tagsByTagId = [NSMutableDictionary new];
     }
     return self;
 }
@@ -41,10 +43,11 @@
 }
 
 - (void)createTagWithTag:(Tag*)tag {
-    [self createTagWithTag:tag withBlock:^{}];
+    [self createTagWithTag:tag withBlock:^(BOOL successful) {}];
 }
 
-- (void)createTagWithTag:(Tag*)tag withBlock:(void(^)(void))block {
+- (void)createTagWithTag:(Tag*)tag withBlock:(void(^)(BOOL successful))block {
+    //__weak TagsStore *weakSelf = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         RKClient *client = [RKClient sharedClient];
         [client post:@"tags.json" usingBlock:^(RKRequest *request) {
@@ -54,43 +57,47 @@
                                     @"topic_id",tag.topicId, nil];
             request.params = [NSDictionary dictionaryWithObject:tagParams forKey:@"tag"];
             request.onDidLoadResponse = ^(RKResponse *response) {
-                dispatch_async(dispatch_get_main_queue(), block);
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
         }];
     });
 }
 
+
+
 //caches tags for topics created by user
 - (void)cacheTags {
-    [self cacheTagsWithBlock:^{}];
+    [self cacheTagsWithBlock:^(BOOL successful){}];
 }
 
 //caches tags for topics created by user
-- (void)cacheTagsWithBlock:(void(^)(void))block {
+- (void)cacheTagsWithBlock:(void(^)(BOOL successful))block {
+    __weak TagsStore *weakSelf = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         RKClient *client = [RKClient sharedClient];
         [client get:@"tags.json" usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {
-                [self parseRKResponse:response];
-                dispatch_async(dispatch_get_main_queue(), block);
+                [weakSelf parseRKResponse:response];
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
         }];
     });
 }
 
 - (void)cacheTagsForTopicId:(int)topicId {
-    [self cacheTagsForTopicId:topicId withBlock:^{}];
+    [self cacheTagsForTopicId:topicId withBlock:^(BOOL successful) {}];
 }
 
-- (void)cacheTagsForTopicId:(int)topicId withBlock:(void(^)(void))block {
+- (void)cacheTagsForTopicId:(int)topicId withBlock:(void(^)(BOOL successful))block {
+    __weak TagsStore *weakSelf = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         RKClient *client = [RKClient sharedClient];
         NSDictionary *queryParams = [NSDictionary dictionaryWithObject:@(topicId) forKey:@"topic_id"];
         NSString *resourcePath = [[[client baseURL] URLByAppendingResourcePath:@"tags.json" queryParameters:queryParams] absoluteString];
         [client get:resourcePath usingBlock:^(RKRequest *request) {
             request.onDidLoadResponse = ^(RKResponse *response) {
-                [self parseRKResponse:response];
-                dispatch_async(dispatch_get_main_queue(), block);
+                [weakSelf parseRKResponse:response];
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
         }];
     });
@@ -106,6 +113,29 @@
     return [self.tagsByTopicId objectForKey:@(topicId)];
 }
 
+- (void)deleteTagWithId:(int)tagId {
+    [self deleteTagWithId:tagId withBlock:^(BOOL successful) {}];
+}
+
+- (void)deleteTagWithId:(int)tagId withBlock:(void (^)(BOOL))block {
+    __weak TagsStore *weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        RKClient *client = [RKClient sharedClient];
+        NSString *resourcePath = [[[client baseURL] URLByAppendingResourcePath:[NSString stringWithFormat:@"tags/%d.json",tagId]] absoluteString];
+        
+        [client delete:resourcePath usingBlock:^(RKRequest *request) {
+            request.onDidLoadResponse = ^(RKResponse *response) {
+                if ([response isSuccessful]) {
+                    Tag *tagRemoved = [weakSelf.tagsByTagId objectForKey:@(tagId)];
+                    [[weakSelf.tagsByTopicId objectForKey:@(tagRemoved.topicId)] removeObject:tagRemoved];
+                    [weakSelf.tagsByTagId removeObjectForKey:@(tagId)];
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
+            };
+        }];
+    });
+}
+
 #pragma mark Helper Methods
 - (void)parseRKResponse:(RKResponse*)response {
     //create mutable dictionary and set tagsByTopicId
@@ -118,12 +148,15 @@
         newTag.lat = [[item objectForKey:@"lat"] floatValue];
         newTag.lng = [[item objectForKey:@"lng"] floatValue];
         newTag.location = [item objectForKey:@"location"];
-        newTag.topicId = [[item objectForKey:@"topic_id"] intValue];
+        newTag.topicId = [[item objectForKey:@"topic_id"] integerValue];
+        newTag.tagId = [[item objectForKey:@"id"] integerValue];
         
         if (![tempTagsByTopicId objectForKey:@(newTag.topicId)]) {
             [tempTagsByTopicId setObject:[NSMutableArray new] forKey:@(newTag.topicId)];
         }
         [[tempTagsByTopicId objectForKey:@(newTag.topicId)] addObject:newTag];
+        
+        [self.tagsByTagId setObject:newTag forKey:@(newTag.tagId)];
     }
     
     //replace tags for keys in tagsByTopicId dictionary
