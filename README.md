@@ -8,8 +8,8 @@ Tags are grouped into topics, and the topics can be subscribed to by other users
 After a user has subscribed to a topic, push notifications will be sent to the user as they come within proximity of any tags belonging to that topic.
 
 
-[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/signin.png)]
-[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/menu.png)]
-[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/topics.png)]
-[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/tags.png)]
-[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/new_tag.png)]
+[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/signin.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/signin.png)
+[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/menu.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/menu.png)
+[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/topics.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/topics.png)
+[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/tags.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/tags.png)
+[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/new_tag.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/new_tag.png)
