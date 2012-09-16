@@ -16,12 +16,14 @@
 @end
 
 @implementation FormPickerCell
+@synthesize dataSource;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.selectionStyle = UITableViewCellSelectionStyleNone;
+        CGSize mainscreenSize = [[UIScreen mainScreen] bounds].size;
         
         self.input = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.input addTarget:self action:@selector(showActionSheet:) forControlEvents:UIControlEventTouchUpInside];
@@ -34,12 +36,13 @@
         
         self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
         
-        CGRect pickerFrame = CGRectMake(0.0, 44.0, 320.0, 256.0);
+        CGRect pickerFrame = CGRectMake(0.0, 44.0, mainscreenSize.width, 256.0);
         self.pickerView = [[UIPickerView alloc] initWithFrame:pickerFrame];
         self.pickerView.showsSelectionIndicator = YES;
         self.pickerView.delegate = self;
+        [self.pickerView selectRow:2 inComponent:0 animated:NO];
         
-        UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 44.0)];
+        UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, 0.0, mainscreenSize.width, 44.0)];
         
         UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelActionSheet:)];
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(donePickingTopic:)];
@@ -47,6 +50,7 @@
         
         [self.actionSheet addSubview:toolbar];
         [self.actionSheet addSubview:self.pickerView];
+        
     }
     return self;
 }
@@ -72,11 +76,27 @@
     self.textLabel.frame = labelFrame;
 }
 
+- (void)setPickerText:(NSString *)pickerText {
+    [self.input setTitle:pickerText forState:UIControlStateNormal];
+    
+    NSArray *userTopics = [[TopicsStore sharedStore] topicsWithUserId:[[[SessionStore sharedStore] currentUser] userId]];
+    for (int i=0; i<[userTopics count]; ++i) {
+        if ([pickerText.lowercaseString isEqualToString:[[userTopics objectAtIndex:i] name]]) {
+            [self.pickerView selectRow:i inComponent:0 animated:NO];
+            break;
+        }
+    }
+}
+
+- (NSString*)pickerText {
+    return self.input.titleLabel.text;
+}
+
 #pragma mark helper methods
 
 - (void)showActionSheet:(UIButton*)button {
     [self.actionSheet showInView:self.superview];
-    [self.actionSheet setFrame:CGRectMake(0.0, 200.0, 320.0, 300.0)];
+    [self.actionSheet setFrame:CGRectMake(0.0, 200.0, [[UIScreen mainScreen] bounds].size.width, 300.0)];
     [self.actionSheet sizeToFit];
 }
 

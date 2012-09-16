@@ -10,4 +10,5 @@
 
 @interface NewTagViewController : UIViewController
 @property (strong) void (^completionBlock)(void);
+@property int topicId;
 @end

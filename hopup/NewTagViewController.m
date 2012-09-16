@@ -45,7 +45,7 @@
         self.locationCell.onDidCompleteEditing = ^(FormTextCell *cell) {
             [weakSelf formTextCellDidFinishEditing:cell];
         };
-        
+
         self.topicCell = [FormPickerCell new];
         self.topicCell.textLabel.text = @"Topic";
         
@@ -57,6 +57,9 @@
 }
 
 - (void)loadView {
+    Topic *topic = [[[TopicsStore sharedStore] topicsByTopicId] objectForKey:@(self.topicId)];
+    self.topicCell.pickerText = topic.name;
+    
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     CGSize mainViewSize = CGSizeMake(self.view.bounds.size.width,self.view.bounds.size.height-20.0);
     
@@ -123,7 +126,7 @@
 }
 
 - (void)submitTag:(UIButton*)button {
-    if (!self.nameCell.input.text || !self.locationCell.input.text || !self.topicCell.input.titleLabel.text) {
+    if (!self.nameCell.input.text || !self.locationCell.input.text || !self.topicCell.pickerText) {
         [self showError:@"Please enter all fields"];
         return;
     }

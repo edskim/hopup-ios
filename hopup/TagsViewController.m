@@ -77,6 +77,7 @@
 
 - (void)addTag:(UIBarButtonItem*)button {
     NewTagViewController *newTagViewController = [NewTagViewController new];
+    newTagViewController.topicId = self.topicId;
     newTagViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     newTagViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     newTagViewController.completionBlock = ^{

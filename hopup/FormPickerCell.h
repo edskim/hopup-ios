@@ -10,4 +10,6 @@
 
 @interface FormPickerCell : UITableViewCell
 @property (strong) UIButton *input;
+@property (strong) NSString *pickerText;
+@property (strong) NSString* (^dataSource)(void); //not yet implemented
 @end
