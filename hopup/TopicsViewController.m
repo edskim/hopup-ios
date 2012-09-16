@@ -57,8 +57,7 @@
 }
 
 -(void)loadView {
-    CGRect tableViewRect = [[UIScreen mainScreen] bounds];
-    self.tableView = [[UITableView alloc] initWithFrame:tableViewRect];
+    self.tableView = [[UITableView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.view = self.tableView;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

@@ -37,6 +37,10 @@
 		649CE57D15FAA71C00F38512 /* Subscription.m in Sources */ = {isa = PBXBuildFile; fileRef = 649CE57C15FAA71C00F38512 /* Subscription.m */; };
 		649E82B015FC1C9A0077EEF7 /* TagsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 649E82AF15FC1C9A0077EEF7 /* TagsStore.m */; };
 		64A1C09E15EEEBE100A71B48 /* Topic.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A1C09D15EEEBE100A71B48 /* Topic.m */; };
+		64C2BB561603AE1200DB4FDF /* NewTagViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C2BB551603AE1200DB4FDF /* NewTagViewController.m */; };
+		64C2BB621603C1A500DB4FDF /* FormTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C2BB611603C1A500DB4FDF /* FormTextCell.m */; };
+		64C2BB651603E00100DB4FDF /* FormPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64C2BB641603E00100DB4FDF /* FormPickerCell.m */; };
+		64C2BB6916040C0000DB4FDF /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64C2BB6816040C0000DB4FDF /* AddressBookUI.framework */; };
 		64E06DD915FE69C80076D4BC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E06DD815FE69C80076D4BC /* MapKit.framework */; };
 		64E06DDD15FE72740076D4BC /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E06DDC15FE72740076D4BC /* Tag.m */; };
 		64E06DE015FE78C20076D4BC /* TagCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E06DDF15FE78C20076D4BC /* TagCell.m */; };
@@ -113,6 +117,14 @@
 		649E82AF15FC1C9A0077EEF7 /* TagsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsStore.m; sourceTree = "<group>"; };
 		64A1C09C15EEEBE100A71B48 /* Topic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Topic.h; sourceTree = "<group>"; };
 		64A1C09D15EEEBE100A71B48 /* Topic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Topic.m; sourceTree = "<group>"; };
+		64C2BB541603AE1200DB4FDF /* NewTagViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTagViewController.h; sourceTree = "<group>"; };
+		64C2BB551603AE1200DB4FDF /* NewTagViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTagViewController.m; sourceTree = "<group>"; };
+		64C2BB601603C1A500DB4FDF /* FormTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormTextCell.h; sourceTree = "<group>"; };
+		64C2BB611603C1A500DB4FDF /* FormTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormTextCell.m; sourceTree = "<group>"; };
+		64C2BB631603E00100DB4FDF /* FormPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormPickerCell.h; sourceTree = "<group>"; };
+		64C2BB641603E00100DB4FDF /* FormPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FormPickerCell.m; sourceTree = "<group>"; };
+		64C2BB6616040B3D00DB4FDF /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		64C2BB6816040C0000DB4FDF /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 		64E06DD815FE69C80076D4BC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		64E06DDB15FE72740076D4BC /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tag.h; sourceTree = "<group>"; };
 		64E06DDC15FE72740076D4BC /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tag.m; sourceTree = "<group>"; };
@@ -146,6 +158,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64C2BB6916040C0000DB4FDF /* AddressBookUI.framework in Frameworks */,
 				6480667316002240000CC223 /* CoreLocation.framework in Frameworks */,
 				64E06DD915FE69C80076D4BC /* MapKit.framework in Frameworks */,
 				644794BD15EC2D63001CEBB0 /* QuartzCore.framework in Frameworks */,
@@ -162,6 +175,8 @@
 		6447940B15EC234B001CEBB0 = {
 			isa = PBXGroup;
 			children = (
+				64C2BB6816040C0000DB4FDF /* AddressBookUI.framework */,
+				64C2BB6616040B3D00DB4FDF /* AddressBook.framework */,
 				648066721600223F000CC223 /* CoreLocation.framework */,
 				6480666015FFCB82000CC223 /* thumbnail@2x.png */,
 				6480665E15FFCB7E000CC223 /* thumbnail.png */,
@@ -267,6 +282,8 @@
 			children = (
 				644794CD15EC358D001CEBB0 /* MenuViewController.h */,
 				644794CE15EC358D001CEBB0 /* MenuViewController.m */,
+				64C2BB541603AE1200DB4FDF /* NewTagViewController.h */,
+				64C2BB551603AE1200DB4FDF /* NewTagViewController.m */,
 				644794C015EC3022001CEBB0 /* SignInViewController.h */,
 				644794C115EC3022001CEBB0 /* SignInViewController.m */,
 				644794C215EC3022001CEBB0 /* SignInViewController.xib */,
@@ -283,6 +300,10 @@
 		649CE57315FA812700F38512 /* View Cells */ = {
 			isa = PBXGroup;
 			children = (
+				64C2BB631603E00100DB4FDF /* FormPickerCell.h */,
+				64C2BB641603E00100DB4FDF /* FormPickerCell.m */,
+				64C2BB601603C1A500DB4FDF /* FormTextCell.h */,
+				64C2BB611603C1A500DB4FDF /* FormTextCell.m */,
 				648229FA15ED560400844696 /* MenuCell.h */,
 				648229FB15ED560400844696 /* MenuCell.m */,
 				6405B10F15FAE9DA008292EA /* NewTopicCell.h */,
@@ -454,6 +475,9 @@
 				64E06DE015FE78C20076D4BC /* TagCell.m in Sources */,
 				64E06DEA15FE9C960076D4BC /* TagsViewController.m in Sources */,
 				6480665C15FFBABF000CC223 /* UsersStore.m in Sources */,
+				64C2BB561603AE1200DB4FDF /* NewTagViewController.m in Sources */,
+				64C2BB621603C1A500DB4FDF /* FormTextCell.m in Sources */,
+				64C2BB651603E00100DB4FDF /* FormPickerCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

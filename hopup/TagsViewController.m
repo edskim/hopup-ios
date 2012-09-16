@@ -7,13 +7,16 @@
 //
 
 #import "MBProgressHUD.h"
+#import "NewTagViewController.h"
 #import "SessionStore.h"
 #import "TagCell.h"
 #import "TagsStore.h"
 #import "TagsViewController.h"
 #import "TopicsStore.h"
 
-@interface TagsViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface TagsViewController () <UITableViewDataSource,UITableViewDelegate> {
+    BOOL editable;
+}
 @property (strong) UITableView *tableView;
 @end
 
@@ -38,6 +41,14 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.title = [[[[TopicsStore sharedStore] topicsByTopicId] objectForKey:@(self.topicId)] name];
+    
+    NSArray* myTopics = [[TopicsStore sharedStore] topicsWithUserId:[[SessionStore sharedStore] currentUser].userId];
+    editable = [myTopics containsObject:[[[TopicsStore sharedStore] topicsByTopicId] objectForKey:@(self.topicId)]];
+
+    if (editable) {
+        UIBarButtonItem *addTopicButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addTag:)];
+        self.navigationItem.rightBarButtonItem = addTopicButton;
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -62,6 +73,16 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (void)addTag:(UIBarButtonItem*)button {
+    NewTagViewController *newTagViewController = [NewTagViewController new];
+    newTagViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    newTagViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    newTagViewController.completionBlock = ^{
+        [self dismissModalViewControllerAnimated:YES];
+    };
+    [self presentViewController:newTagViewController animated:YES completion:NULL];
 }
 
 #pragma mark Delegate methods
@@ -91,9 +112,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    TagCell *tagCell = (TagCell*)[self.tableView cellForRowAtIndexPath:indexPath];
-    NSArray* myTopics = [[TopicsStore sharedStore] topicsWithUserId:[[SessionStore sharedStore] currentUser].userId];
-    return [myTopics containsObject:[[[TopicsStore sharedStore] topicsByTopicId] objectForKey:@(tagCell.cellTag.topicId)]];
+    return editable;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -52,9 +52,8 @@
         RKClient *client = [RKClient sharedClient];
         [client post:@"tags.json" usingBlock:^(RKRequest *request) {
             NSDictionary *tagParams = [NSDictionary dictionaryWithKeysAndObjects:
-                                    @"lat",tag.lat, @"lng",tag.lng,
                                     @"text",tag.text, @"location",tag.location,
-                                    @"topic_id",tag.topicId, nil];
+                                    @"topic_id",@(tag.topicId), nil];
             request.params = [NSDictionary dictionaryWithObject:tagParams forKey:@"tag"];
             request.onDidLoadResponse = ^(RKResponse *response) {
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
