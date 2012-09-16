@@ -18,8 +18,7 @@
 #import "UsersStore.h"
 
 @interface TopicsViewController () <UITableViewDataSource,UITableViewDelegate,
-                                        UITextFieldDelegate,UIGestureRecognizerDelegate,
-                                        UISearchBarDelegate>
+                                        UITextFieldDelegate,UISearchBarDelegate>
 @property (strong) UITableView *tableView;
 @property (strong) NSMutableArray *topics;
 @property (strong) UISearchBar *searchBar;
