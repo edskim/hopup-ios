@@ -72,18 +72,26 @@
     CGRect bottomHalfScreen = CGRectMake(0.0, mainViewSize.height/2.0, mainViewSize.width, mainViewSize.height/2.0);
     CGRect mapViewRect = CGRectInset(bottomHalfScreen, 5.0, 5.0);
     self.mapView = [[MKMapView alloc] initWithFrame:mapViewRect];
+    [self.mapView setShowsUserLocation:YES];
     
     CGRect toolbarFrame = CGRectMake(0.0, 0.0, self.view.bounds.size.width, 44.0);
     UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:toolbarFrame];
-
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddTag:)];
-    [toolbar setItems:[NSArray arrayWithObject:cancelButton]];
     
     UIButton *submitButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     CGFloat yPos = tableViewRect.origin.y + tableViewRect.size.height;
     submitButton.frame = CGRectMake(mainViewSize.width/4.0, yPos-4.0, mainViewSize.width/2.0, 25.0);
     [submitButton addTarget:self action:@selector(submitTag:) forControlEvents:UIControlEventTouchUpInside];
     [submitButton setTitle:@"Submit" forState:UIControlStateNormal];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAddTag:)];
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    UIButton *currLocationButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGRect currLocationButtonFrame = CGRectMake(0.0, 0.0, 25.0, 25.0);
+    [currLocationButton addTarget:self action:@selector(populateCurrentLocation) forControlEvents:UIControlEventTouchUpInside];
+    currLocationButton.frame = currLocationButtonFrame;
+    [currLocationButton setBackgroundImage:[UIImage imageNamed:@"nav_icon.png"] forState:UIControlStateNormal];
+    [toolbar setItems:[NSArray arrayWithObjects:cancelButton, spacer, [[UIBarButtonItem alloc] initWithCustomView:currLocationButton], nil]];
     
     CGRect errorFrame = CGRectMake(0.0, 44.0, mainViewSize.width, 20.0);
     self.errorLabel = [[UILabel alloc] initWithFrame:errorFrame];
@@ -157,6 +165,25 @@
             [self showError:@"Tag creation was unsuccessful"];
         }
     }];
+}
+
+- (void)populateCurrentLocation {
+    CLLocation *curr = [[self.mapView userLocation] location];
+    [self.geocoder reverseGeocodeLocation:curr completionHandler:^(NSArray *placemarks, NSError *error) {
+        if ([placemarks count] > 0) {
+            CLPlacemark *placeMark = [placemarks objectAtIndex:0];
+            self.locationCell.input.text = ABCreateStringWithAddressDictionary(placeMark.addressDictionary, NO);
+            
+            CLLocationCoordinate2D coord = [placeMark.location coordinate];
+            MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(coord, 500.0, 500.0);
+            [self.mapView setRegion:region];
+            
+            MKPointAnnotation *point = [MKPointAnnotation new];
+            point.coordinate = coord;
+            [self.mapView addAnnotation:point];
+        }
+    }];
+
 }
 
 #pragma mark UITableViewDelegate methods

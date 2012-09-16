@@ -38,7 +38,7 @@
     
     TopicsViewController *myTopicsViewController = [[TopicsViewController alloc] initWithTitle:@"My Topics"];
     myTopicsViewController.backButtonText = @"My Topics";
-    myTopicsViewController.details = @"See topics I created.";
+    myTopicsViewController.details = @"See topics you created.";
     myTopicsViewController.dataSourceBlock = ^NSArray*(void){
         return [[TopicsStore sharedStore] topicsWithUserId:[[SessionStore sharedStore] currentUser].userId];
     };
