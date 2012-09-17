@@ -10,5 +10,6 @@
 
 @implementation User
 @synthesize username;
+@synthesize email;
 @synthesize userId;
 @end

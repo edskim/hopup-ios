@@ -8,6 +8,7 @@
 
 #import "MenuViewController.h"
 #import "MenuCell.h"
+#import "ProfileViewController.h"
 #import "SessionStore.h"
 #import "SignInViewController.h"
 #import "SignInViewControllerDelegate.h"
@@ -127,7 +128,7 @@
 }
 
 - (void)showProfile {
-    
+    [self.navigationController pushViewController:[ProfileViewController new] animated:YES];
 }
 
 #pragma mark SignInViewController delegate methods

@@ -37,7 +37,7 @@
         
         self.nameCell = [FormTextCell new];
         self.nameCell.textLabel.text = @"Name";
-        self.nameCell.input.placeholder = @"Topic Name";
+        self.nameCell.input.placeholder = @"Tag Name";
         
         self.locationCell = [FormTextCell new];
         self.locationCell.textLabel.text = @"Location";
