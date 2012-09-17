@@ -21,6 +21,9 @@
 		644794C415EC3022001CEBB0 /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 644794C215EC3022001CEBB0 /* SignInViewController.xib */; };
 		644794CF15EC358D001CEBB0 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794CE15EC358D001CEBB0 /* MenuViewController.m */; };
 		644794F615EC5AF5001CEBB0 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 644794F515EC5AF5001CEBB0 /* User.m */; };
+		646C73251607A7680069A0CF /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646C73231607A7680069A0CF /* SignUpViewController.m */; };
+		646C73261607A7680069A0CF /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646C73241607A7680069A0CF /* SignUpViewController.xib */; };
+		646C73291607A92D0069A0CF /* butterflies.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 646C73281607A92D0069A0CF /* butterflies.jpeg */; };
 		6480665C15FFBABF000CC223 /* UsersStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6480665B15FFBABF000CC223 /* UsersStore.m */; };
 		6480665F15FFCB7F000CC223 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480665E15FFCB7E000CC223 /* thumbnail.png */; };
 		6480666115FFCB82000CC223 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480666015FFCB82000CC223 /* thumbnail@2x.png */; };
@@ -92,6 +95,10 @@
 		644794D715EC3E62001CEBB0 /* SignInViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInViewControllerDelegate.h; sourceTree = "<group>"; };
 		644794F415EC5AF5001CEBB0 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		644794F515EC5AF5001CEBB0 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		646C73221607A7680069A0CF /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
+		646C73231607A7680069A0CF /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
+		646C73241607A7680069A0CF /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		646C73281607A92D0069A0CF /* butterflies.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = butterflies.jpeg; sourceTree = "<group>"; };
 		6480665A15FFBABF000CC223 /* UsersStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsersStore.h; sourceTree = "<group>"; };
 		6480665B15FFBABF000CC223 /* UsersStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersStore.m; sourceTree = "<group>"; };
 		6480665E15FFCB7E000CC223 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
@@ -291,6 +298,9 @@
 				644794C015EC3022001CEBB0 /* SignInViewController.h */,
 				644794C115EC3022001CEBB0 /* SignInViewController.m */,
 				644794C215EC3022001CEBB0 /* SignInViewController.xib */,
+				646C73221607A7680069A0CF /* SignUpViewController.h */,
+				646C73231607A7680069A0CF /* SignUpViewController.m */,
+				646C73241607A7680069A0CF /* SignUpViewController.xib */,
 				648229F515ED543E00844696 /* SubscriptionsViewController.h */,
 				648229F615ED543E00844696 /* SubscriptionsViewController.m */,
 				64E06DE815FE9C960076D4BC /* TagsViewController.h */,
@@ -339,6 +349,7 @@
 				64E06E0215FF220A0076D4BC /* BackgroundCell@2x.png */,
 				64E06DFD15FF205E0076D4BC /* BackgroundNavigationBar.png */,
 				64E06DFE15FF205E0076D4BC /* BackgroundNavigationBar@2x.png */,
+				646C73281607A92D0069A0CF /* butterflies.jpeg */,
 				64E06E0915FF2AD30076D4BC /* ButtonBack.png */,
 				64E06E0A15FF2AD40076D4BC /* ButtonBack@2x.png */,
 				64E06E0B15FF2AD50076D4BC /* ButtonBackSelected.png */,
@@ -435,6 +446,8 @@
 				6480666915FFF9D3000CC223 /* AvatarPlaceholder@2x.png in Resources */,
 				64C2BB6F1605A37E00DB4FDF /* nav_icon@2x.png in Resources */,
 				64C2BB711605A42300DB4FDF /* nav_icon.png in Resources */,
+				646C73261607A7680069A0CF /* SignUpViewController.xib in Resources */,
+				646C73291607A92D0069A0CF /* butterflies.jpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -486,6 +499,7 @@
 				64C2BB561603AE1200DB4FDF /* NewTagViewController.m in Sources */,
 				64C2BB621603C1A500DB4FDF /* FormTextCell.m in Sources */,
 				64C2BB651603E00100DB4FDF /* FormPickerCell.m in Sources */,
+				646C73251607A7680069A0CF /* SignUpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

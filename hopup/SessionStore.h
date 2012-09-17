@@ -15,4 +15,5 @@
 + (SessionStore*)sharedStore;
 - (void)createSessionWithEmail:(NSString*)email withPassword:(NSString*)pw withBlock:(void(^)(BOOL))block;
 - (void)destroySessionWithBlock:(void(^)(void))block;
+- (void)setCurrentUser:(User *)currentUser withCookies:(NSArray*)cookies;
 @end

@@ -123,7 +123,7 @@
     signinController.modalPresentationStyle = UIModalPresentationFormSheet;
     signinController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     signinController.delegate = self;
-    [self presentViewController:signinController animated:YES completion:NULL];
+    [self presentViewController:signinController animated:YES completion:nil];
 }
 
 - (void)showProfile {
@@ -133,7 +133,7 @@
 #pragma mark SignInViewController delegate methods
 - (void)signInViewController:(SignInViewController *)controller signInSuccessfull:(BOOL)succeeded {
     if (succeeded) {
-        [self dismissModalViewControllerAnimated:YES];
+        [self dismissViewControllerAnimated:YES completion:nil];
         [self signIn];
     } else {
 
@@ -151,10 +151,6 @@
     }
 
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return 100;
-//}
 
 #pragma mark UITableView Data Source methods
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

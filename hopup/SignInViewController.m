@@ -11,6 +11,7 @@
 #import "MenuViewController.h"
 #import "SessionStore.h"
 #import "SignInViewControllerDelegate.h"
+#import "SignUpViewController.h"
 #import "User.h"
 
 @interface SignInViewController () <UITextFieldDelegate>
@@ -65,10 +66,10 @@
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         [[SessionStore sharedStore] createSessionWithEmail:self.usernameBox.text withPassword:self.passwordBox.text withBlock:^(BOOL successful){
             if (successful) {
-                [delegate signInViewController:self signInSuccessfull:YES];
+                [self.delegate signInViewController:self signInSuccessfull:YES];
             } else {
                 self.errorBox.text = @"Invalid username or password";
-                [delegate signInViewController:self signInSuccessfull:NO];
+                [self.delegate signInViewController:self signInSuccessfull:NO];
             }
             [MBProgressHUD hideHUDForView:self.view animated:YES];
         }];
@@ -82,6 +83,17 @@
 }
 
 - (IBAction)signupPressed:(UIButton *)sender {
+    SignUpViewController *signUpVC = [SignUpViewController new];
+    signUpVC.modalPresentationStyle = UIModalPresentationFormSheet;
+    signUpVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    signUpVC.completionBlock = ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            if ([[SessionStore sharedStore] currentUser] != nil) {
+                [delegate signInViewController:self signInSuccessfull:YES];
+            }
+        }];
+    };
+    [self presentViewController:signUpVC animated:YES completion:nil];
 }
 
 //uitextfield delegate

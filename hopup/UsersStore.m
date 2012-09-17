@@ -7,6 +7,7 @@
 //
 
 #import "RestKit.h"
+#import "SessionStore.h"
 #import "UsersStore.h"
 
 @interface UsersStore ()
@@ -46,6 +47,43 @@
             request.onDidLoadResponse = ^(RKResponse *response) {
                 [weakSelf ParseRKResponse:response];
                 dispatch_async(dispatch_get_main_queue(), block);
+            };
+        }];
+        
+    });
+}
+
+- (void)createUserWithUser:(User *)user withPassword:(NSString *)pw withPasswordConfirmation:(NSString *)cPw{
+    [self createUserWithUser:user withPassword:pw withPasswordConfirmation:cPw withBlock:^(BOOL successful, NSArray *errors){}];
+}
+
+- (void)createUserWithUser:(User *)user withPassword:(NSString*)pw withPasswordConfirmation:(NSString*)cPw withBlock:(void (^)(BOOL successful, NSArray *errorString))block {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [[RKClient sharedClient] post:@"users.json" usingBlock:^(RKRequest *request) {
+            NSDictionary *userFields = [NSDictionary dictionaryWithKeysAndObjects:
+                                       @"name",user.username,@"email",user.email,@"password",pw,@"password_confirmation",cPw, nil];
+            request.params = [NSDictionary dictionaryWithObject:userFields forKey:@"user"];
+            request.onDidLoadResponse = ^(RKResponse *response) {
+                NSMutableArray *errors = [NSMutableArray new];
+                id parsedObject = [response parsedBody:nil];
+                if ([response isSuccessful]) {
+                    User *newUser = [User new];
+                    newUser.username = [parsedObject objectForKey:@"name"];
+                    newUser.email = [parsedObject objectForKey:@"email"];
+                    newUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
+                    
+                    //sign in user after successfuly creating
+                    [[SessionStore sharedStore] setCurrentUser:newUser withCookies:[response cookies]];
+                } else {
+                    for (NSString *key in [[parsedObject objectForKey:@"errors"] allKeys]) {
+                        if ([key isEqualToString:@"password_digest"])
+                            continue;
+                        for (NSString *error in [[parsedObject objectForKey:@"errors"] objectForKey:key]) {
+                            [errors addObject:[NSString stringWithFormat:@"%@ %@",key,error]];
+                        }
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful],errors);});
             };
         }];
         

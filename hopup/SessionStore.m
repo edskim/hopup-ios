@@ -58,22 +58,15 @@
                 request.onDidLoadResponse = ^(RKResponse *response) {
                     weakSelf.signedIn = [response isSuccessful];
                     if ([response isSuccessful]) {
-                        weakSelf.currentUser = [User new];
-                        weakSelf.cookies = [response cookies];
-                        
                         id parsedObject = [response parsedBody:nil];
-                        weakSelf.currentUser.username = [parsedObject objectForKey:@"name"];
-                        weakSelf.currentUser.email = [parsedObject objectForKey:@"email"];
-                        weakSelf.currentUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
+                        User *newUser = [User new];
+                        newUser.username = [parsedObject objectForKey:@"name"];
+                        newUser.email = [parsedObject objectForKey:@"email"];
+                        newUser.userId = [[parsedObject objectForKey:@"id"] integerValue];
                         
-                        for (NSHTTPCookie *cookie in weakSelf.cookies) {
-                            [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
-                        }
-                        [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
-                            [[SubscriptionsStore sharedStore] cacheSubscriptions];
-                        }];
+                        [weakSelf setCurrentUser:newUser withCookies:[response cookies]];
                     }
-                    block(weakSelf.signedIn);
+                    dispatch_async(dispatch_get_main_queue(), ^{block(weakSelf.signedIn);});
                 };
                 
             }];
@@ -90,6 +83,16 @@
     self.cookies = nil;
     self.currentUser = nil;
     self.signedIn = NO;
+}
+
+- (void)setCurrentUser:(User *)currentUser withCookies:(NSArray*)cookies {
+    self.currentUser = currentUser;
+    for (NSHTTPCookie *cookie in cookies) {
+        [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    }
+    [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
+        [[SubscriptionsStore sharedStore] cacheSubscriptions];
+    }];
 }
 
 @end

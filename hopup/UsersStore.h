@@ -13,5 +13,7 @@
 + (UsersStore*)sharedStore;
 - (void)cacheUsers;
 - (void)cacheUsersWithBlock:(void(^)(void))block;
+- (void)createUserWithUser:(User*)user withPassword:(NSString*)pw withPasswordConfirmation:(NSString*)cPw;
+- (void)createUserWithUser:(User *)user withPassword:(NSString*)pw withPasswordConfirmation:(NSString*)cPw withBlock:(void(^)(BOOL successful,NSArray* errorStrings))block;
 - (User*)userWithId:(int)userId;
 @end
