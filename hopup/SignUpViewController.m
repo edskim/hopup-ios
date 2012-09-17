@@ -58,6 +58,7 @@
 }
 
 - (IBAction)submitPressed:(UIButton *)sender {
+    [self.view endEditing:YES];
     
     //Validate fields
     NSMutableArray *errors = [NSMutableArray new];
@@ -89,6 +90,10 @@
 
 - (IBAction)cancelPressed:(UIButton *)sender {
     self.completionBlock();
+}
+
+- (IBAction)cancelTextPressed:(UIButton *)sender {
+    [self.view endEditing:YES];
 }
 
 #pragma mark UITextField delegate methods
