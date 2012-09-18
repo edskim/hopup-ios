@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "MBProgressHUD.h"
 #import "SignUpViewController.h"
 #import "UsersStore.h"
 
@@ -78,6 +79,7 @@
     User *newUser = [User new];
     newUser.username = self.nameTextField.text;
     newUser.email = self.emailTextField.text;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     [[UsersStore sharedStore] createUserWithUser:newUser withPassword:self.passwordTextField.text
                         withPasswordConfirmation:self.cPasswordTextField.text withBlock:^(BOOL successful, NSArray *errors) {
                             if (successful) {
@@ -85,6 +87,7 @@
                             } else {
                                 self.errorLabel.text = [errors componentsJoinedByString:@"\n"];
                             }
+                            [MBProgressHUD hideHUDForView:self.view animated:YES];
                         }];
 }
 

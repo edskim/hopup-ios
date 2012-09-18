@@ -10,6 +10,7 @@
 #import "FormPickerCell.h"
 #import "FormTextCell.h"
 #import <MapKit/MapKit.h>
+#import "MBProgressHUD.h"
 #import "NewTagViewController.h"
 #import "SessionStore.h"
 #import "TagsStore.h"
@@ -168,6 +169,7 @@
 }
 
 - (void)populateCurrentLocation {
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     CLLocation *curr = [[self.mapView userLocation] location];
     [self.geocoder reverseGeocodeLocation:curr completionHandler:^(NSArray *placemarks, NSError *error) {
         if ([placemarks count] > 0) {
@@ -182,6 +184,7 @@
             point.coordinate = coord;
             [self.mapView addAnnotation:point];
         }
+     [MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
 
 }
