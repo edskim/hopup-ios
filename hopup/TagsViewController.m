@@ -80,8 +80,10 @@
     newTagViewController.topicId = self.topicId;
     newTagViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     newTagViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    
+    __weak TagsViewController *weakSelf = self;
     newTagViewController.completionBlock = ^{
-        [self dismissModalViewControllerAnimated:YES];
+        [weakSelf dismissModalViewControllerAnimated:YES];
     };
     [self presentViewController:newTagViewController animated:YES completion:NULL];
 }

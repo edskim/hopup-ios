@@ -86,10 +86,12 @@
     SignUpViewController *signUpVC = [SignUpViewController new];
     signUpVC.modalPresentationStyle = UIModalPresentationFormSheet;
     signUpVC.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    
+    __weak SignInViewController *weakSelf = self;
     signUpVC.completionBlock = ^{
-        [self dismissViewControllerAnimated:YES completion:^{
+        [weakSelf dismissViewControllerAnimated:YES completion:^{
             if ([[SessionStore sharedStore] currentUser] != nil) {
-                [delegate signInViewController:self signInSuccessfull:YES];
+                [delegate signInViewController:weakSelf signInSuccessfull:YES];
             }
         }];
     };
