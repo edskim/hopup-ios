@@ -13,3 +13,4 @@ After a user has subscribed to a topic, push notifications will be sent to the u
 [![](https://dl.dropbox.com/u/5991852/iOS/Hopup/topics.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/topics.png)
 [![](https://dl.dropbox.com/u/5991852/iOS/Hopup/tags.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/tags.png)
 [![](https://dl.dropbox.com/u/5991852/iOS/Hopup/new_tag.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/new_tag.png)
+[![](https://dl.dropbox.com/u/5991852/iOS/Hopup/notifications.png)](https://dl.dropbox.com/u/5991852/iOS/Hopup/notifications.png)

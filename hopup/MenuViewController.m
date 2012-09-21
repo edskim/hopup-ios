@@ -18,13 +18,11 @@
 #import "User.h"
 
 @interface MenuViewController () <SignInViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
-@property BOOL signedIn;
 @property (strong) UITableView *tableView;
 @property (strong) NSMutableArray *menuControllers;
 @end
 
 @implementation MenuViewController
-@synthesize signedIn;
 
 - (void)resetMenuControllers {
     self.menuControllers = [NSMutableArray new];
@@ -90,8 +88,10 @@
     [super viewDidLoad];
     [[self.navigationController navigationBar] setBarStyle:UIBarStyleBlackTranslucent];
 
-    if (!signedIn) {
+    if (![[SessionStore sharedStore] signedIn]) {
         [self showSignInScreen];
+    } else {
+        [self signIn];
     }
          
 }
@@ -108,12 +108,10 @@
 }
 
 - (void)signIn {
-    self.signedIn = YES;
     self.title = [SessionStore sharedStore].currentUser.username;
 }
 
 - (void)signOut {
-    self.signedIn = NO;
     self.title = nil;
     [[SessionStore sharedStore] destroySessionWithBlock:^{}];
     [self resetMenuControllers];

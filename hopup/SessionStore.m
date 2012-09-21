@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "LocationManagerStore.h"
 #import "RestKit.h"
 #import "SessionStore.h"
 #import "SubscriptionsStore.h"
@@ -24,6 +25,14 @@
     if (self) {
         self.currentUser = nil;
         self.signedIn = NO;
+        
+        NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+        if ([userDefaults boolForKey:@"signedIn"] && [userDefaults objectForKey:@"currentUser"]
+            && [[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies] count] > 0) {
+            self.currentUser = [NSKeyedUnarchiver unarchiveObjectWithData:[userDefaults objectForKey:@"currentUser"]];
+            self.signedIn = [userDefaults boolForKey:@"signedIn"];
+            [[TopicsStore sharedStore] cacheTopics];
+        }
     }
     return self;
 }
@@ -56,7 +65,6 @@
                 request.params = params;
                 
                 request.onDidLoadResponse = ^(RKResponse *response) {
-                    weakSelf.signedIn = [response isSuccessful];
                     if ([response isSuccessful]) {
                         id parsedObject = [response parsedBody:nil];
                         User *newUser = [User new];
@@ -77,21 +85,36 @@
 }
 
 - (void)destroySessionWithBlock:(void(^)(void))block {
-    for (NSHTTPCookie *cookie in self.cookies) {
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+    [userDefaults removeObjectForKey:@"signedIn"];
+    [userDefaults removeObjectForKey:@"currentUser"];
+    
+    NSArray *cookiesToDelete = [NSArray arrayWithArray:[[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
+    for (NSHTTPCookie *cookie in cookiesToDelete) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] deleteCookie:cookie];
     }
+
     self.cookies = nil;
     self.currentUser = nil;
     self.signedIn = NO;
+    [[LocationManagerStore sharedStore] stopMonitoringAllRegions];
 }
 
 - (void)setCurrentUser:(User *)currentUser withCookies:(NSArray*)cookies {
+    self.signedIn = YES;
     self.currentUser = currentUser;
     for (NSHTTPCookie *cookie in cookies) {
         [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
     }
+    
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc] init];
+    [userDefaults setBool:self.signedIn forKey:@"signedIn"];
+    [userDefaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self.currentUser] forKey:@"currentUser"];
+    
     [[TopicsStore sharedStore] cacheTopicsWithBlock:^{
-        [[SubscriptionsStore sharedStore] cacheSubscriptions];
+        [[SubscriptionsStore sharedStore] cacheSubscriptionsWithBlock:^{
+            [[LocationManagerStore sharedStore] resetMonitoredRegions];
+        }];
     }];
 }
 

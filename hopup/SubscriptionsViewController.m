@@ -98,8 +98,9 @@
     newCell.topic = topic;
     
     __weak SubscriptionsViewController* weakSelf = self;
+    __weak TopicCell *weakCell = newCell;
     newCell.onDidUnSubscribe = ^{
-        [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        [weakSelf.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:[weakSelf.tableView indexPathForCell:weakCell]] withRowAnimation:UITableViewRowAnimationLeft];
     };
     
     return newCell;

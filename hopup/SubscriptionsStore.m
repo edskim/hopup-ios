@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "LocationManagerStore.h"
 #import "RestKit.h"
 #import "SessionStore.h"
 #import "Subscription.h"
@@ -76,6 +77,7 @@
                     newSubscription.userId = [[parsedResponse objectForKey:@"user_id"] integerValue];
                     newSubscription.subscriptionId = [[parsedResponse objectForKey:@"id"] integerValue];
                     [weakSelf.subscriptionsByTopicIdPrivate setObject:newSubscription forKey:@(topicId)];
+                    [[LocationManagerStore sharedStore] monitorTagsForTopic:newSubscription.topicId];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
@@ -93,6 +95,7 @@
             request.onDidLoadResponse = ^(RKResponse *response) {
                 if ([response isSuccessful]) {
                     [weakSelf.subscriptionsByTopicIdPrivate removeObjectForKey:@(topicId)];
+                    [[LocationManagerStore sharedStore] stopMonitoringTagsForTopic:topicId];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
@@ -114,6 +117,10 @@
         [tempSubscribedTopics addObject:[[sharedStore topicsByTopicId] objectForKey:key]];
     }
     return [NSArray arrayWithArray:tempSubscribedTopics];
+}
+
+- (NSArray *)subscribedTopicIds {
+    return self.subscriptionsByTopicIdPrivate.allKeys;
 }
 
 - (void)removeLocalStoreSubscriptionWithTopicId:(int)topicId {

@@ -67,6 +67,7 @@
     CGRect tableViewRect = CGRectMake(0.0, 55.0, mainViewSize.width, mainViewSize.height/3.0);
     self.tableView = [[UITableView alloc] initWithFrame:tableViewRect style:UITableViewStyleGrouped];
     self.tableView.backgroundColor = [UIColor clearColor];
+    self.tableView.backgroundView = nil;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     

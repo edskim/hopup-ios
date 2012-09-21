@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "LocationManagerStore.h"
 #import "RestKit.h"
-#import "SessionStore.h"
+#import "SubscriptionsStore.h"
 #import "TagsStore.h"
 #import "User.h"
 
@@ -56,6 +57,26 @@
                                     @"topic_id",@(tag.topicId), nil];
             request.params = [NSDictionary dictionaryWithObject:tagParams forKey:@"tag"];
             request.onDidLoadResponse = ^(RKResponse *response) {
+                if ([response isSuccessful]) {
+                    id item = [response parsedBody:nil];
+                    Tag *newTag = [Tag new];
+                    newTag.text = [item objectForKey:@"text"];
+                    newTag.lat = [[item objectForKey:@"lat"] doubleValue];
+                    newTag.lng = [[item objectForKey:@"lng"] doubleValue];
+                    newTag.location = [item objectForKey:@"location"];
+                    newTag.topicId = [[item objectForKey:@"topic_id"] integerValue];
+                    newTag.tagId = [[item objectForKey:@"id"] integerValue];
+                    
+                    if (![self.tagsByTopicId objectForKey:@(newTag.topicId)]) {
+                        [self.tagsByTopicId setObject:[NSMutableArray new] forKey:@(newTag.topicId)];
+                    }
+                    [[self.tagsByTopicId objectForKey:@(newTag.topicId)] addObject:newTag];
+                    [self.tagsByTagId setObject:newTag forKey:@(newTag.tagId)];
+                    
+                    if ([[SubscriptionsStore sharedStore] isSubscribedToTopicWithId:newTag.topicId]) {
+                        [[LocationManagerStore sharedStore] monitorTag:newTag];
+                    }
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
         }];
@@ -128,6 +149,7 @@
                     Tag *tagRemoved = [weakSelf.tagsByTagId objectForKey:@(tagId)];
                     [[weakSelf.tagsByTopicId objectForKey:@(tagRemoved.topicId)] removeObject:tagRemoved];
                     [weakSelf.tagsByTagId removeObjectForKey:@(tagId)];
+                    [[LocationManagerStore sharedStore] stopMonitoringTag:tagRemoved];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };
@@ -144,8 +166,8 @@
     for (id item in parsedResponse) {
         Tag *newTag = [Tag new];
         newTag.text = [item objectForKey:@"text"];
-        newTag.lat = [[item objectForKey:@"lat"] floatValue];
-        newTag.lng = [[item objectForKey:@"lng"] floatValue];
+        newTag.lat = [[item objectForKey:@"lat"] doubleValue];
+        newTag.lng = [[item objectForKey:@"lng"] doubleValue];
         newTag.location = [item objectForKey:@"location"];
         newTag.topicId = [[item objectForKey:@"topic_id"] integerValue];
         newTag.tagId = [[item objectForKey:@"id"] integerValue];

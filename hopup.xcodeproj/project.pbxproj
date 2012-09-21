@@ -26,6 +26,7 @@
 		646C73291607A92D0069A0CF /* butterflies.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 646C73281607A92D0069A0CF /* butterflies.jpeg */; };
 		646C732D1607E6080069A0CF /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 646C732B1607E6070069A0CF /* ProfileViewController.m */; };
 		646C732E1607E6080069A0CF /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 646C732C1607E6070069A0CF /* ProfileViewController.xib */; };
+		647DEF0C1609471B0011FED2 /* LocationManagerStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 647DEF0B1609471B0011FED2 /* LocationManagerStore.m */; };
 		6480665C15FFBABF000CC223 /* UsersStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 6480665B15FFBABF000CC223 /* UsersStore.m */; };
 		6480665F15FFCB7F000CC223 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480665E15FFCB7E000CC223 /* thumbnail.png */; };
 		6480666115FFCB82000CC223 /* thumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6480666015FFCB82000CC223 /* thumbnail@2x.png */; };
@@ -70,6 +71,7 @@
 		64E06E1615FF2B070076D4BC /* ButtonNavigationBar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E06E1215FF2B050076D4BC /* ButtonNavigationBar@2x.png */; };
 		64E06E1715FF2B070076D4BC /* ButtonNavigationBarSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E06E1315FF2B050076D4BC /* ButtonNavigationBarSelected.png */; };
 		64E06E1815FF2B070076D4BC /* ButtonNavigationBarSelected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64E06E1415FF2B060076D4BC /* ButtonNavigationBarSelected@2x.png */; };
+		64ED6FDF160BAA3A00E49464 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 64ED6FDE160BAA3A00E49464 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +106,8 @@
 		646C732A1607E6070069A0CF /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
 		646C732B1607E6070069A0CF /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		646C732C1607E6070069A0CF /* ProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
+		647DEF0A1609471B0011FED2 /* LocationManagerStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManagerStore.h; sourceTree = "<group>"; };
+		647DEF0B1609471B0011FED2 /* LocationManagerStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManagerStore.m; sourceTree = "<group>"; };
 		6480665A15FFBABF000CC223 /* UsersStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UsersStore.h; sourceTree = "<group>"; };
 		6480665B15FFBABF000CC223 /* UsersStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UsersStore.m; sourceTree = "<group>"; };
 		6480665E15FFCB7E000CC223 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
@@ -166,6 +170,7 @@
 		64E06E1215FF2B050076D4BC /* ButtonNavigationBar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNavigationBar@2x.png"; sourceTree = "<group>"; };
 		64E06E1315FF2B050076D4BC /* ButtonNavigationBarSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonNavigationBarSelected.png; sourceTree = "<group>"; };
 		64E06E1415FF2B060076D4BC /* ButtonNavigationBarSelected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNavigationBarSelected@2x.png"; sourceTree = "<group>"; };
+		64ED6FDE160BAA3A00E49464 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		7B882911A45D47A4A9F2E946 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -191,6 +196,7 @@
 		6447940B15EC234B001CEBB0 = {
 			isa = PBXGroup;
 			children = (
+				64ED6FDE160BAA3A00E49464 /* Default-568h@2x.png */,
 				64C2BB6816040C0000DB4FDF /* AddressBookUI.framework */,
 				64C2BB6616040B3D00DB4FDF /* AddressBook.framework */,
 				648066721600223F000CC223 /* CoreLocation.framework */,
@@ -255,6 +261,8 @@
 		649CE56E15FA807000F38512 /* Data Store */ = {
 			isa = PBXGroup;
 			children = (
+				647DEF0A1609471B0011FED2 /* LocationManagerStore.h */,
+				647DEF0B1609471B0011FED2 /* LocationManagerStore.m */,
 				649E82AE15FC1C9A0077EEF7 /* TagsStore.h */,
 				649E82AF15FC1C9A0077EEF7 /* TagsStore.m */,
 				64822A1415ED7CFB00844696 /* TopicsStore.h */,
@@ -457,6 +465,7 @@
 				646C73261607A7680069A0CF /* SignUpViewController.xib in Resources */,
 				646C73291607A92D0069A0CF /* butterflies.jpeg in Resources */,
 				646C732E1607E6080069A0CF /* ProfileViewController.xib in Resources */,
+				64ED6FDF160BAA3A00E49464 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -510,6 +519,7 @@
 				64C2BB651603E00100DB4FDF /* FormPickerCell.m in Sources */,
 				646C73251607A7680069A0CF /* SignUpViewController.m in Sources */,
 				646C732D1607E6080069A0CF /* ProfileViewController.m in Sources */,
+				647DEF0C1609471B0011FED2 /* LocationManagerStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,6 +545,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -550,6 +561,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -562,7 +575,8 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Edward Kim";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Edward Kim";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -571,6 +585,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "344AE2F6-BA5F-48CF-8B69-6591A6D1BF37";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "344AE2F6-BA5F-48CF-8B69-6591A6D1BF37";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

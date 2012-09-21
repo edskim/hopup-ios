@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 
 @interface Tag : NSObject
-@property float lat;
-@property float lng;
+@property double lat;
+@property double lng;
 @property (strong) NSString *text;
 @property (strong) NSString *location;
 @property int topicId;

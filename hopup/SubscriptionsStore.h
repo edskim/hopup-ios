@@ -16,5 +16,6 @@
 - (void)unsubscribeToTopic:(int)topicId withBlock:(void(^)(BOOL successful))block;
 - (BOOL)isSubscribedToTopicWithId:(int)topicId;
 - (NSArray*)subscribedTopics;
+- (NSArray*)subscribedTopicIds;
 - (void)removeLocalStoreSubscriptionWithTopicId:(int)topicId;
 @end

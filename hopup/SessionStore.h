@@ -11,6 +11,7 @@
 
 @interface SessionStore : NSObject
 @property (strong,readonly) User *currentUser;
+@property (strong,readonly) NSArray *cookies;
 @property (readonly) BOOL signedIn;
 + (SessionStore*)sharedStore;
 - (void)createSessionWithEmail:(NSString*)email withPassword:(NSString*)pw withBlock:(void(^)(BOOL))block;

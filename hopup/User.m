@@ -12,4 +12,21 @@
 @synthesize username;
 @synthesize email;
 @synthesize userId;
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.username forKey:@"username"];
+    [aCoder encodeObject:self.email forKey:@"email"];
+    [aCoder encodeInt:self.userId forKey:@"userId"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    if (self) {
+        self.username = [aDecoder decodeObjectForKey:@"username"];
+        self.email = [aDecoder decodeObjectForKey:@"email"];
+        self.userId = [aDecoder decodeIntForKey:@"userId"];
+    }
+    return self;
+}
+
 @end

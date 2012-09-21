@@ -6,6 +6,7 @@
 //  Copyright (c) 2012 Edward Kim. All rights reserved.
 //
 
+#import "LocationManagerStore.h"
 #import "RestKit.h"
 #import "SessionStore.h"
 #import "TopicsStore.h"
@@ -120,6 +121,7 @@
                     [weakSelf.topics removeObject:topicToRemove];
                     [[weakSelf.topicsByUserId objectForKey:@(topicToRemove.creatorId)] removeObject:topicToRemove];
                     [weakSelf.topicsByTopicIdPrivate removeObjectForKey:@(topicId)];
+                    [[LocationManagerStore sharedStore] stopMonitoringTagsForTopic:topicId];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{block([response isSuccessful]);});
             };

@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "LocationManagerStore.h"
 #import "MenuViewController.h"
 #import "RestKit.h"
+#import "SessionStore.h"
+#import "TagsStore.h"
 
 NSString *applicationURL;
 
@@ -22,19 +25,33 @@ NSString *applicationURL;
     applicationURL = @"http://ancient-plains-4741.herokuapp.com/";
     [RKClient clientWithBaseURLString:applicationURL];
     
+    UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    //app launched with local notification
+    if (localNotif) {
+        
+    }
+
+    if ([[SessionStore sharedStore] signedIn]) {
+        //TODO - tag may not be cached, only created tags are cached here, need chachwithtopic id
+        [[TagsStore sharedStore] cacheTagsWithBlock:^(BOOL successful) {
+            if (successful) {
+                [LocationManagerStore sharedStore]; //initiate location store so it can handle the region
+            }
+        }];
+    }
+    
+
+    if ([launchOptions objectForKey:UIApplicationLaunchOptionsLocationKey]) {
+        
+    }
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     
     self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[MenuViewController new]];
     [self.window makeKeyAndVisible];
-    
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"BackgroundNavigationBar.png"] forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"ButtonBack.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 13.0, 0.0, 9.0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"ButtonBackSelected.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 13.0, 0.0, 9.0)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"ButtonNavigationBar.png"] resizableImageWithCapInsets:UIEdgeInsetsZero] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"ButtonNavigationBarSelected.png"] resizableImageWithCapInsets:UIEdgeInsetsZero] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"BackgroundNavigationBar.png"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self setAppearance];
     
     return YES;
 }
@@ -67,5 +84,17 @@ NSString *applicationURL;
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)setAppearance {
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"BackgroundNavigationBar.png"] forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"ButtonBack.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 13.0, 0.0, 9.0)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:[[UIImage imageNamed:@"ButtonBackSelected.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0.0, 13.0, 0.0, 9.0)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"ButtonNavigationBar.png"] resizableImageWithCapInsets:UIEdgeInsetsZero] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearance] setBackgroundImage:[[UIImage imageNamed:@"ButtonNavigationBarSelected.png"] resizableImageWithCapInsets:UIEdgeInsetsZero] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [[UIToolbar appearance] setBackgroundImage:[UIImage imageNamed:@"BackgroundNavigationBar.png"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    
+}
 
 @end
